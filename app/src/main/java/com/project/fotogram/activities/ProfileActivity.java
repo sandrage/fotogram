@@ -49,7 +49,27 @@ public class ProfileActivity extends AppCompatActivity {
         } else if (this.username.equals(currentUsername)) {
             ImageButton updateMyPicture = (ImageButton) findViewById(R.id.update_picture);
             updateMyPicture.setVisibility(View.VISIBLE);
+
+            ImageButton prefs = (ImageButton) findViewById(R.id.action_preferences);
+            prefs.setVisibility(View.VISIBLE);
+            prefs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent prefsIntent = new Intent(ProfileActivity.this, PrefsActivity.class);
+                    startActivity(prefsIntent);
+                }
+            });
         }
+        retrieveProfileInfo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        retrieveProfileInfo();
+    }
+
+    private void retrieveProfileInfo() {
         RequestWithParams profileRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "profile", mess -> {
             Log.d("fotogramLogs", "messaggio: " + mess);
             Gson gson = new Gson();

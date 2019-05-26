@@ -6,7 +6,6 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -34,7 +33,6 @@ public class ShowcaseActivity extends AppCompatActivity {
         BottomNavigationItemView createPostImage = (BottomNavigationItemView) findViewById(R.id.action_createPost);
         BottomNavigationItemView ownProfile = (BottomNavigationItemView) findViewById(R.id.action_ownProfile);
         BottomNavigationItemView searchFriend = (BottomNavigationItemView) findViewById(R.id.action_searchFriend);
-        ImageButton prefs = (ImageButton) findViewById(R.id.action_preferences);
         postsListView = (ListView) findViewById(R.id.postsList);
 
         //Request all the wall posts
@@ -45,14 +43,6 @@ public class ShowcaseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent createPostIntent = new Intent(ShowcaseActivity.this, PostCreationActivity.class);
                 startActivity(createPostIntent);
-            }
-        });
-
-        prefs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent prefsIntent = new Intent(ShowcaseActivity.this, PrefsActivity.class);
-                startActivity(prefsIntent);
             }
         });
 

@@ -26,8 +26,6 @@ import com.project.fotogram.model.SessionInfo;
 import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
 
-import java.io.ByteArrayOutputStream;
-
 public class ProfilePhotoUpdateActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 2;
 
@@ -57,17 +55,11 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("fotogramLogs", "save post cliccato!");
                 try {
-                    //todo scale better this
                     ImageView loadedImage = (ImageView) findViewById(R.id.profile_photo_updated);
                     BitmapDrawable bitmapDrawable = (BitmapDrawable) loadedImage.getDrawable();
-                    ByteArrayOutputStream byteArrayStream = new ByteArrayOutputStream();
                     Bitmap bitmap = bitmapDrawable.getBitmap();
-                    bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() % 100, bitmap.getHeight() % 100, false);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayStream);
-                    byte[] imageBytes = byteArrayStream.toByteArray();
-
+                    byte[] imageBytes = UtilityMethods.resizePhoto(bitmap);
                     String imageToBeLoaded = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-
                     RequestWithParams createPostRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "picture_update", response -> {
                         Log.d("fotogramLogs", "finito caricamento!");
                         finish();
