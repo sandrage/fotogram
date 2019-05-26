@@ -21,7 +21,7 @@ public class VolleySingleton {
     }
 
 
-    public <T> void addToRequestQueue(Request<T> req){
+    public synchronized <T> void addToRequestQueue(Request<T> req){
         this.requestQueue.add(req);
     }
 }
