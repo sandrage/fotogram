@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="410dp"
+        android:layout_height="414dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="249dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Create a new post"
+            android:textSize="30dp"
+            tools:layout_editor_absoluteX="81dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <EditText
+            android:id="@+id/newPostComment"
+            android:layout_width="411dp"
+            android:layout_height="47dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Post comment"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="50dp" android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_weight="1">
+
+            <Button
+                android:id="@+id/action_searchPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search a photo"
+                tools:layout_editor_absoluteX="253dp"
+                tools:layout_editor_absoluteY="109dp" />
+
+            <ImageView
+                android:id="@+id/loadedImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxHeight="50dp"
+                android:maxWidth="50dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/action_savePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK" android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

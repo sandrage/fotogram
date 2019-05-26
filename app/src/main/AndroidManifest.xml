@@ -12,11 +12,17 @@
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ShowcaseActivity"/>
+        <activity android:name=".activities.ShowcaseActivity" />
+        <activity android:name=".activities.PostCreationActivity" />
+        <activity android:name=".activities.ProfileActivity" />
+        <activity android:name=".activities.ProfilePhotoUpdateActivity" />
+        <activity android:name=".activities.PrefsActivity" />
+        <activity android:name=".activities.SearchActivity" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

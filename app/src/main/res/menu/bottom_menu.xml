@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_ownProfile"
+        android:title=""
+        android:icon="@drawable/ic_outline_face_24px">
+    </item>
+    <item android:id="@+id/action_createPost"
+        android:title=""
+        android:icon="@drawable/ic_outline_add_photo_alternate_24px">
+    </item>
+    <item android:id="@+id/action_searchFriend"
+        android:title=""
+        android:icon="@drawable/ic_outline_search_24px">
+    </item>
+</menu>
