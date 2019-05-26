@@ -38,26 +38,7 @@ public class ShowcaseActivity extends AppCompatActivity {
         postsListView = (ListView) findViewById(R.id.postsList);
 
         //Request all the wall posts
-        RequestWithParams wallRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "wall", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String mess) {
-                Log.d("fotogramLogs", "messaggio: " + mess);
-                Gson gson = new Gson();
-                PostsList posts = gson.fromJson(mess, PostsList.class);
-                postsList = posts;
-
-                //display them through the adapter
-                PostAdapter postAdapter = new PostAdapter(ShowcaseActivity.this, R.layout.posts_list_element, postsList.getPosts());
-                postsListView.setAdapter(postAdapter);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                UtilityMethods.manageCommunicationError(error);
-            }
-        });
-        wallRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ShowcaseActivity.this));
-        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(wallRequest);
+        updateWall();
 
         createPostImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +74,36 @@ public class ShowcaseActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("fotogram", "onResume!!!");
+        updateWall();
+    }
+
+    private void updateWall() {
+        RequestWithParams wallRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "wall", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String mess) {
+                Log.d("fotogramLogs", "messaggio: " + mess);
+                Gson gson = new Gson();
+                PostsList posts = gson.fromJson(mess, PostsList.class);
+                postsList = posts;
+
+                //display them through the adapter
+                PostAdapter postAdapter = new PostAdapter(ShowcaseActivity.this, R.layout.posts_list_element, postsList.getPosts());
+                postsListView.setAdapter(postAdapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                UtilityMethods.manageCommunicationError(error);
+            }
+        });
+        wallRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ShowcaseActivity.this));
+        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(wallRequest);
+    }
+
     public void viewUserProfile(View v) {
         View usernameTextView = findViewById(v.getId());
         Log.d("fotogramLogs", "view: " + usernameTextView + ", " + usernameTextView.getTag());
@@ -101,4 +112,6 @@ public class ShowcaseActivity extends AppCompatActivity {
         profileIntent.putExtra("username", username);
         startActivity(profileIntent);
     }
+
+
 }
