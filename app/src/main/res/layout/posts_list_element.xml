@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/userProfileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:onClick="viewUserProfile"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/creatorUsername"
             android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:text="Username"
+            android:layout_toRightOf="@id/userProfileImage"
+            android:paddingLeft="10dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:fontFamily="@font/robotocondensedbold"
+            android:textColor="@color/colorFuxia"
+            android:onClick="viewUserProfile"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/profile_arrowRight"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            style="@style/LeftArrowComment"
+            android:layout_toRightOf="@id/userProfileImage"
+            android:layout_below="@id/creatorUsername"
+            android:layout_alignTop="@id/postComment" />
 
-            <ImageView
-                android:id="@+id/userProfileImage"
-                android:layout_width="95dp"
-                android:layout_height="66dp"
-                android:onClick="viewUserProfile"/>
-
-            <TextView
-                android:id="@+id/creatorUsername"
-                android:layout_width="110dp"
-                android:layout_height="match_parent"
-                android:text="Username"
-                android:textAlignment="center"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:onClick="viewUserProfile"/>
-        </LinearLayout>
         <TextView
             android:id="@+id/postComment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comment description"
-            tools:layout_editor_absoluteX="-16dp"
-            tools:layout_editor_absoluteY="134dp"
-            android:layout_weight="1"
-            android:onClick="viewUserProfile"/>
+            android:maxHeight="80dp"
+            android:layout_below="@id/creatorUsername"
+            android:layout_toRightOf="@id/profile_arrowRight"
+            android:layout_alignBottom="@id/userProfileImage"
+            style="@style/PostComment"
+            android:onClick="viewUserProfile"
+            android:text="Comment description" />
 
         <ImageView
             android:id="@+id/postImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="viewUserProfile" />
-    </LinearLayout>
+            style="@style/PostListFrame"
+            android:onClick="viewUserProfile"
+            android:layout_below="@id/userProfileImage" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

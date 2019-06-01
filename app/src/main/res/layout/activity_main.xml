@@ -18,7 +18,7 @@
             android:id="@+id/fotogramTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/loginHeader"
+            android:layout_above="@+id/username"
             android:layout_marginBottom="29dp"
             android:layout_centerHorizontal="true"
             android:text="fotogram"
@@ -27,19 +27,6 @@
             android:fontFamily="@font/roboto"
             android:textStyle="bold"
             android:textColor="@color/colorFuxia" />
-
-        <TextView
-            android:id="@+id/loginHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/username"
-            android:layout_marginBottom="12dp"
-            android:layout_centerHorizontal="true"
-            android:text="Login"
-            android:textAlignment="center"
-            android:fontFamily="@font/roboto"
-            android:textStyle="bold"
-            android:textColor="@color/colorViolet" />
 
         <EditText
             android:id="@+id/username"

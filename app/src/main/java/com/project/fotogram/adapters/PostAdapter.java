@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.project.fotogram.R;
 import com.project.fotogram.model.Post;
+import com.project.fotogram.model.SessionInfo;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class PostAdapter extends ArrayAdapter<Post> {
@@ -35,6 +37,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
             postsTemplate = layoutInflater.inflate(this.postsLayout, null);
         }
         Post post = getItem(position);
+        HashMap<String, String> profilePhotos = SessionInfo.getInstance().getProfilePhotos();
         if (post != null) {
             TextView usernameView = (TextView) postsTemplate.findViewById(R.id.creatorUsername);
             TextView postCommentView = (TextView) postsTemplate.findViewById(R.id.postComment);
@@ -50,6 +53,15 @@ public class PostAdapter extends ArrayAdapter<Post> {
             Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
             postImageView.setImageBitmap(decodedImageByte);
             postImageView.setTag(post.getUser());
+
+            if (profilePhotos != null && profilePhotos.containsKey(post.getUser())) {
+                byte[] decodedProfileImage = Base64.decode(profilePhotos.get(post.getUser()), Base64.DEFAULT);
+                Bitmap decodedProfileImageByte = BitmapFactory.decodeByteArray(decodedProfileImage, 0, decodedProfileImage.length);
+                creatorProfileImageView.setImageBitmap(decodedProfileImageByte);
+                creatorProfileImageView.setTag(post.getUser());
+            } else {
+                //TODO dovrei mettergli la X magari
+            }
         }
         return postsTemplate;
     }

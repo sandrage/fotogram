@@ -66,7 +66,7 @@ public class UtilityMethods {
 
     public static byte[] resizePhoto(Bitmap image) {
         ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-        image = Bitmap.createScaledBitmap(image, 50, 50, false);
+        image = Bitmap.createScaledBitmap(image, 100, 100, false);
         byteArray.reset();
         image.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
         return byteArray.toByteArray();

@@ -4,72 +4,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <ImageButton
-            android:id="@+id/follow_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_outline_thumb_up_24px"
-            android:visibility="invisible"
-            android:onClick="followTheFriend" />
-
-        <ImageButton
-            android:id="@+id/unfollow_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_outline_thumb_down_24px"
-            android:visibility="invisible"
-            android:onClick="unfollowTheFriend" />
-
-        <ImageButton
-            android:id="@+id/update_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_outline_edit_24px"
-            android:visibility="invisible"
-            android:onClick="updateMyPhoto" />
+        android:layout_height="match_parent">
 
         <ImageButton
             android:id="@+id/action_preferences"
-            android:layout_width="96dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_outline_more_horiz_24px"
-            android:visibility="invisible" />
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:tint="@color/colorFuxia"
+            android:background="@null"
+            app:srcCompat="@drawable/ic_outline_more_horiz_24px" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <FrameLayout
+            android:id="@+id/profileImageFrame"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/action_preferences"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true">
 
             <ImageView
                 android:id="@+id/profileImage"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_weight="1" />
+                android:scaleType="fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/profileUsername" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_toRightOf="@+id/profileImageFrame"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/action_preferences"
+            android:fontFamily="@font/roboto"
+            android:textSize="26dp"
+            android:textStyle="bold"
+            android:text="Username"
+            android:textColor="@color/colorFuxia"
+            android:gravity="center"
+            android:id="@+id/profileUsername" />
 
-        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/followunfollowbuttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profileUsername"
+            android:layout_toRightOf="@+id/profileImageFrame"
+            android:layout_alignParentRight="true"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/follow_user"
+                style="@style/ButtonStyle"
+                android:text="FOLLOW"
+                android:onClick="followTheFriend" />
+
+            <Button
+                android:id="@+id/unfollow_user"
+                style="@style/ButtonStyle"
+                android:text="UNFOLLOW"
+                android:onClick="unfollowTheFriend"
+                android:layout_toRightOf="@id/follow_user" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/profile_postTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="16dp"
+            android:text="Posts"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorViolet"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/profileImageFrame" />
 
         <ListView
             android:id="@+id/profilePostsList"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/profile_postTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

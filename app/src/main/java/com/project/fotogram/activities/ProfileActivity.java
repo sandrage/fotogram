@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -40,16 +41,12 @@ public class ProfileActivity extends AppCompatActivity {
         profileImgView = (ImageView) findViewById(R.id.profileImage);
         SessionInfo sessionInfo = SessionInfo.getInstance();
         String currentUsername = sessionInfo.getCurrentUsername(this);
-        if (!this.username.equals(currentUsername) && !sessionInfo.getFollowedFriends().containsByName(username)) {
-            ImageButton followFriend = (ImageButton) findViewById(R.id.follow_user);
+        if (!this.username.equals(currentUsername)) {
+            Button followFriend = (Button) findViewById(R.id.follow_user);
             followFriend.setVisibility(View.VISIBLE);
-        } else if (!this.username.equals(currentUsername)) {
-            ImageButton unfollowFriend = (ImageButton) findViewById(R.id.unfollow_user);
+            Button unfollowFriend = (Button) findViewById(R.id.unfollow_user);
             unfollowFriend.setVisibility(View.VISIBLE);
-        } else if (this.username.equals(currentUsername)) {
-            ImageButton updateMyPicture = (ImageButton) findViewById(R.id.update_picture);
-            updateMyPicture.setVisibility(View.VISIBLE);
-
+        } else {
             ImageButton prefs = (ImageButton) findViewById(R.id.action_preferences);
             prefs.setVisibility(View.VISIBLE);
             prefs.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +56,15 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivity(prefsIntent);
                 }
             });
+            profileImgView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("fotogramLog", "update photo");
+                    Intent updatePhotoIntent = new Intent(ProfileActivity.this, ProfilePhotoUpdateActivity.class);
+                    startActivity(updatePhotoIntent);
+                }
+
+            });
         }
         retrieveProfileInfo();
     }
@@ -66,6 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //todo MA DOVREI DAVVERO FARLO ALLA RESUME? LO FA DUE VOLTE SE NO // o farlo solo alla create
         retrieveProfileInfo();
     }
 
@@ -79,9 +86,10 @@ public class ProfileActivity extends AppCompatActivity {
                 byte[] decodedPostImageString = Base64.decode(user.getImg(), Base64.DEFAULT);
                 Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
                 profileImgView.setImageBitmap(decodedImageByte);
+                profileImgView.setBackgroundResource(R.drawable.rounded_button);
             }
             //display them through the adapter
-            UserDataAdapter userDataAdapter = new UserDataAdapter(ProfileActivity.this, R.layout.posts_list_element, user.getUsername(), user.getImg(), user.getPosts());
+            UserDataAdapter userDataAdapter = new UserDataAdapter(ProfileActivity.this, R.layout.profile_list_element, user.getPosts());
             listView.setAdapter(userDataAdapter);
         }, error -> UtilityMethods.manageCommunicationError(error));
         profileRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));
@@ -93,7 +101,11 @@ public class ProfileActivity extends AppCompatActivity {
         Log.d("fotogramLog", "follow the friend");
         RequestWithParams followRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "follow", mess -> {
             SessionInfo.getInstance().updateFollowedFriends(ProfileActivity.this);
-        }, error -> UtilityMethods.manageCommunicationError(error));
+        }, error -> {
+            Log.d("fotogramLogs", "error:" + new String(error.networkResponse.data));
+            UtilityMethods.manageCommunicationError(error);
+
+        });
         followRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));
         followRequest.addParam("username", this.username);
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(followRequest);
@@ -103,16 +115,13 @@ public class ProfileActivity extends AppCompatActivity {
         Log.d("fotogramLog", "unfollow the friend");
         RequestWithParams unfollowRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "unfollow", mess -> {
             SessionInfo.getInstance().updateFollowedFriends(ProfileActivity.this);
-        }, error -> UtilityMethods.manageCommunicationError(error));
+        }, error -> {
+            Log.d("fotogramLogs", "error: " + new String(error.networkResponse.data));
+            UtilityMethods.manageCommunicationError(error);
+        });
         unfollowRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));
         unfollowRequest.addParam("username", this.username);
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(unfollowRequest);
-    }
-
-    public void updateMyPhoto(View v) {
-        Log.d("fotogramLog", "update photo");
-        Intent updatePhotoIntent = new Intent(ProfileActivity.this, ProfilePhotoUpdateActivity.class);
-        startActivity(updatePhotoIntent);
     }
 
 }

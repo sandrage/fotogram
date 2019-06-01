@@ -14,11 +14,12 @@ import com.project.fotogram.communication.VolleySingleton;
 import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
 
+import java.util.HashMap;
+
 public class SessionInfo {
     private static SessionInfo instance;
-    private String currentUsername;
     private FollowedFriends followedFriends;
-    private boolean photoPermissions;
+    private HashMap<String, String> profilePhotos;
 
     public synchronized static SessionInfo getInstance() {
         if (instance == null) {
@@ -28,7 +29,6 @@ public class SessionInfo {
     }
 
     private SessionInfo() {
-        this.photoPermissions = false;
     }
 
     public synchronized void setSessionId(Activity activity, String sessionid) {
@@ -92,11 +92,15 @@ public class SessionInfo {
         VolleySingleton.getInstance(activity.getApplicationContext()).addToRequestQueue(request);
     }
 
-    public boolean isPhotoPermissions() {
-        return photoPermissions;
+    public HashMap<String, String> getProfilePhotos() {
+        return profilePhotos;
     }
 
-    public synchronized void setPhotoPermissions(boolean photoPermissions) {
-        this.photoPermissions = photoPermissions;
+    public synchronized void addProfilePhotos(Friend profilePhoto) {
+        if (this.profilePhotos == null) {
+            this.profilePhotos = new HashMap<>();
+        }
+        this.profilePhotos.put(profilePhoto.getName(), profilePhoto.getPicture());
     }
+
 }
