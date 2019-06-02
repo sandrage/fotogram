@@ -16,7 +16,8 @@
             android:layout_alignParentRight="true"
             android:tint="@color/colorFuxia"
             android:background="@null"
-            app:srcCompat="@drawable/ic_outline_more_horiz_24px" />
+            app:srcCompat="@drawable/ic_outline_more_horiz_24px"
+            android:visibility="invisible" />
 
         <FrameLayout
             android:id="@+id/profileImageFrame"
@@ -88,7 +89,38 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/profile_postTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/showcase_bottomMenu" />
+
+        <RelativeLayout
+            android:id="@+id/showcase_bottomMenu"
+            style="@style/BottomNavBar"
+            android:background="@drawable/simple_gradient">
+
+            <ImageButton
+                android:id="@+id/action_goBack"
+                style="@style/BottomMenuItems"
+                app:srcCompat="@drawable/ic_round_arrow_back_24px" />
+
+            <ImageButton
+                android:id="@+id/action_ownProfile"
+                style="@style/BottomMenuItems"
+                android:layout_toRightOf="@id/action_goBack"
+                app:srcCompat="@drawable/ic_outline_face_24px" />
+
+            <ImageButton
+                android:id="@+id/action_createPost"
+                style="@style/BottomMenuItems"
+                android:layout_toRightOf="@id/action_ownProfile"
+                app:srcCompat="@drawable/ic_outline_add_photo_alternate_24px" />
+
+            <ImageButton
+                android:id="@+id/action_searchFriend"
+                style="@style/BottomMenuItems"
+                android:layout_marginRight="0dp"
+                android:layout_toRightOf="@id/action_createPost"
+                app:srcCompat="@drawable/ic_outline_search_24px" />
+        </RelativeLayout>
     </RelativeLayout>
 
 

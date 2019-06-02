@@ -3,6 +3,7 @@ package com.project.fotogram.model;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -73,7 +74,7 @@ public class SessionInfo {
         return followedFriends;
     }
 
-    public synchronized void updateFollowedFriends(Activity activity) {
+    public synchronized void updateFollowedFriends(FragmentActivity activity) {
         RequestWithParams request = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "followed", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -85,7 +86,7 @@ public class SessionInfo {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                UtilityMethods.manageCommunicationError(error);
+                UtilityMethods.manageCommunicationError(activity, error);
             }
         });
         request.addParam("session_id", SessionInfo.getInstance().getSessionId(activity));

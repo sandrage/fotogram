@@ -16,6 +16,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -33,6 +34,15 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updatephoto);
+        ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
+        ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
+        ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
+        ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);
+        createPostImage.setOnClickListener(getMenuOnClickListener());
+        ownProfile.setOnClickListener(getMenuOnClickListener());
+        searchFriend.setOnClickListener(getMenuOnClickListener());
+        goBack.setOnClickListener(getMenuOnClickListener());
+
         Button searchPhotoButt = (Button) findViewById(R.id.update_profile_photo_button);
         searchPhotoButt.setOnClickListener(new View.OnClickListener() {
             //todo perform this
@@ -63,7 +73,7 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
                     RequestWithParams createPostRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "picture_update", response -> {
                         Log.d("fotogramLogs", "finito caricamento!");
                         finish();
-                    }, error -> UtilityMethods.manageCommunicationError(error));
+                    }, error -> UtilityMethods.manageCommunicationError(ProfilePhotoUpdateActivity.this, error));
 
                     Log.d("fotogramLogs", "imageToBeLoaded: " + imageToBeLoaded);
                     createPostRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfilePhotoUpdateActivity.this));
@@ -75,6 +85,32 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public View.OnClickListener getMenuOnClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.action_createPost:
+                        Intent createPostIntent = new Intent(ProfilePhotoUpdateActivity.this, PostCreationActivity.class);
+                        startActivity(createPostIntent);
+                        break;
+                    case R.id.action_ownProfile:
+                        Intent ownProfile = new Intent(ProfilePhotoUpdateActivity.this, ProfileActivity.class);
+                        ownProfile.putExtra("username", SessionInfo.getInstance().getCurrentUsername(ProfilePhotoUpdateActivity.this));
+                        startActivity(ownProfile);
+                        break;
+                    case R.id.action_searchFriend:
+                        Intent search = new Intent(ProfilePhotoUpdateActivity.this, SearchActivity.class);
+                        startActivity(search);
+                        break;
+                    case R.id.action_goBack:
+                        finish();
+                        break;
+                }
+            }
+        };
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.project.fotogram.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.fotogram.R;
-import com.project.fotogram.activities.ProfileActivity;
 import com.project.fotogram.model.Friend;
 
 import java.util.ArrayList;
@@ -61,15 +59,11 @@ public class SearchListAdapter extends ArrayAdapter<Friend> implements Filterabl
         if (friend != null) {
             TextView username = (TextView) view.findViewById(R.id.partialresult_username);
             username.setText(getItem(position).getName());
-            username.setTag(friend.getName());
-            username.setOnClickListener(goToUserProfile());
             if (friend.getPicture() != null) {
                 ImageView userImage = (ImageView) view.findViewById(R.id.partialresult_userimage);
                 byte[] decodedPostImageString = Base64.decode(friend.getPicture(), Base64.DEFAULT);
                 Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
                 userImage.setImageBitmap(decodedImageByte);
-                userImage.setTag(friend.getName());
-                userImage.setOnClickListener(goToUserProfile());
             }
         }
         return view;
@@ -102,17 +96,5 @@ public class SearchListAdapter extends ArrayAdapter<Friend> implements Filterabl
                 notifyDataSetInvalidated();
             }
         }
-    }
-
-    public View.OnClickListener goToUserProfile() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = (String) v.getTag();
-                Intent intent = new Intent(callerContext, ProfileActivity.class);
-                intent.putExtra("username", username);
-                callerContext.startActivity(intent);
-            }
-        };
     }
 }

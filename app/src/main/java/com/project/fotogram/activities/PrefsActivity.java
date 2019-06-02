@@ -24,5 +24,13 @@ public class PrefsActivity extends AppCompatActivity {
                 startActivity(createMainMenuIntent);
             }
         });
+
+        Button gobackButton = (Button) findViewById(R.id.action_goback);
+        gobackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">fotogram</string>
+    <string name="alert_ok">OK</string>
+    <string name="alert_unexp_error">Oops! Something went wrong :(</string>
 </resources>

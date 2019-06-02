@@ -44,30 +44,16 @@
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">250dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@null</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginBottom">20dp</item>
         <item name="android:foregroundGravity">center</item>
     </style>
-    <!--<style name="VioletBorderedButtonStyle" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/white_bordered</item>
-        <item name="android:textColor">@color/colorViolet</item>
-        <item name="android:fontFamily">@font/roboto</item>
-        <item name="android:textSize">14dp</item>
-        <item name="android:layout_height">36dp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:minWidth">70dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:elevation">2dp</item>
-        <item name="android:layout_margin">12dp</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textStyle">bold</item>
-    </style>-->
+
     <style name="BottomMenuItems" parent="Widget.AppCompat.ImageButton">
-        <item name="android:layout_width">36dp</item>
-        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">46dp</item>
+        <item name="android:layout_height">46dp</item>
         <item name="android:background">@null</item>
         <item name="android:layout_marginRight">50dp</item>
         <item name="android:tint">@color/colorDirtyWhite</item>
@@ -91,5 +77,38 @@
     <style name="LeftArrowComment" parent="TextAppearance.AppCompat">
         <item name="android:drawableLeft">@drawable/ic_outline_chevron_right_24px</item>
         <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="ActivityTitle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textSize">26dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:fontFamily">@font/robotocondensedbold</item>
+        <item name="android:textColor">@color/colorDirtyWhite</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/simple_gradient</item>
+        <item name="android:elevation">3dp</item>
+    </style>
+
+    <style name="ButtonWhiteStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/colorDirtyWhite</item>
+        <item name="android:textColor">@color/colorFuxia</item>
+        <item name="android:fontFamily">@font/robotocondensedbold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="ListViewStyle" parent="Widget.AppCompat.ListView">
+        <item name="android:divider">@drawable/listview_divider</item>
+        <item name="android:dividerHeight">1dp</item>
     </style>
 </resources>

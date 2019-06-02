@@ -2,35 +2,33 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
 
-    <EditText
-        android:id="@+id/partialresult_username"
-        android:layout_width="332dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/partialresult_userimage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/partialresult_userimage"
-        android:layout_width="67dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.034"
-        app:srcCompat="@drawable/ic_outline_face_24px" />
+        <TextView
+            android:id="@+id/partialresult_username"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/partialresult_userimage"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/partialresult_userimage"
+            android:text="Name"
+            android:fontFamily="@font/robotocondensedbold"
+            android:textSize="16dp"
+            android:textColor="@color/colorViolet" />
+
+        <ImageView
+            android:id="@+id/partialresult_userimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_outline_face_24px"
+            android:layout_marginTop="10dp" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

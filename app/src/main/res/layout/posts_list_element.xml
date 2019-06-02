@@ -5,15 +5,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants">
 
         <ImageView
             android:id="@+id/userProfileImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:onClick="viewUserProfile"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:id="@+id/creatorUsername"
@@ -27,7 +28,6 @@
             android:textAllCaps="true"
             android:fontFamily="@font/robotocondensedbold"
             android:textColor="@color/colorFuxia"
-            android:onClick="viewUserProfile"
             android:layout_marginTop="10dp" />
 
         <TextView
@@ -48,14 +48,12 @@
             android:layout_toRightOf="@id/profile_arrowRight"
             android:layout_alignBottom="@id/userProfileImage"
             style="@style/PostComment"
-            android:onClick="viewUserProfile"
             android:text="Comment description" />
 
         <ImageView
             android:id="@+id/postImage"
             android:layout_width="match_parent"
             style="@style/PostListFrame"
-            android:onClick="viewUserProfile"
             android:layout_below="@id/userProfileImage" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

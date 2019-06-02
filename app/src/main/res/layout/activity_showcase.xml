@@ -10,24 +10,16 @@
 
         <TextView
             android:id="@+id/showcase_title"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
             android:text="DASHBOARD"
-            android:textSize="26dp"
-            android:paddingLeft="20dp"
-            android:fontFamily="@font/robotocondensedbold"
-            android:textColor="@color/colorDirtyWhite"
-            android:layout_alignParentTop="true"
-            android:gravity="center_vertical"
-            android:background="@drawable/simple_gradient"
-            android:elevation="3dp" />
+            style="@style/ActivityTitle" />
 
         <ListView
             android:id="@+id/postsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/showcase_title"
-            android:layout_above="@id/showcase_bottomMenu" />
+            android:layout_above="@id/showcase_bottomMenu"
+            style="@style/ListViewStyle" />
 
         <RelativeLayout
             android:id="@+id/showcase_bottomMenu"
@@ -37,7 +29,8 @@
             <ImageButton
                 android:id="@+id/action_ownProfile"
                 style="@style/BottomMenuItems"
-                app:srcCompat="@drawable/ic_outline_face_24px" />
+                app:srcCompat="@drawable/ic_outline_face_24px"
+                android:layout_toRightOf="@id/action_goBack" />
 
             <ImageButton
                 android:id="@+id/action_createPost"

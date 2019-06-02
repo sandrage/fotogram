@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,6 +19,7 @@ import com.project.fotogram.R;
 import com.project.fotogram.adapters.UserDataAdapter;
 import com.project.fotogram.communication.RequestWithParams;
 import com.project.fotogram.communication.VolleySingleton;
+import com.project.fotogram.dialogs.MyDialog;
 import com.project.fotogram.model.SessionInfo;
 import com.project.fotogram.model.UserData;
 import com.project.fotogram.utility.Constants;
@@ -35,18 +35,22 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
+        ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
+        ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
+        ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);
+        createPostImage.setOnClickListener(getMenuOnClickListener());
+        ownProfile.setOnClickListener(getMenuOnClickListener());
+        searchFriend.setOnClickListener(getMenuOnClickListener());
+        goBack.setOnClickListener(getMenuOnClickListener());
+
         this.username = getIntent().getStringExtra("username");
         listView = (ListView) findViewById(R.id.profilePostsList);
         profileUsernameView = (TextView) findViewById(R.id.profileUsername);
         profileImgView = (ImageView) findViewById(R.id.profileImage);
         SessionInfo sessionInfo = SessionInfo.getInstance();
         String currentUsername = sessionInfo.getCurrentUsername(this);
-        if (!this.username.equals(currentUsername)) {
-            Button followFriend = (Button) findViewById(R.id.follow_user);
-            followFriend.setVisibility(View.VISIBLE);
-            Button unfollowFriend = (Button) findViewById(R.id.unfollow_user);
-            unfollowFriend.setVisibility(View.VISIBLE);
-        } else {
+        if (this.username.equals(currentUsername)) {
             ImageButton prefs = (ImageButton) findViewById(R.id.action_preferences);
             prefs.setVisibility(View.VISIBLE);
             prefs.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +70,35 @@ public class ProfileActivity extends AppCompatActivity {
 
             });
         }
+
         retrieveProfileInfo();
+
+    }
+
+    public View.OnClickListener getMenuOnClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.action_createPost:
+                        Intent createPostIntent = new Intent(ProfileActivity.this, PostCreationActivity.class);
+                        startActivity(createPostIntent);
+                        break;
+                    case R.id.action_ownProfile:
+                        Intent ownProfile = new Intent(ProfileActivity.this, ProfileActivity.class);
+                        ownProfile.putExtra("username", SessionInfo.getInstance().getCurrentUsername(ProfileActivity.this));
+                        startActivity(ownProfile);
+                        break;
+                    case R.id.action_searchFriend:
+                        Intent search = new Intent(ProfileActivity.this, SearchActivity.class);
+                        startActivity(search);
+                        break;
+                    case R.id.action_goBack:
+                        finish();
+                        break;
+                }
+            }
+        };
     }
 
     @Override
@@ -91,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity {
             //display them through the adapter
             UserDataAdapter userDataAdapter = new UserDataAdapter(ProfileActivity.this, R.layout.profile_list_element, user.getPosts());
             listView.setAdapter(userDataAdapter);
-        }, error -> UtilityMethods.manageCommunicationError(error));
+        }, error -> UtilityMethods.manageCommunicationError(this, error));
         profileRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));
         profileRequest.addParam("username", username);
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(profileRequest);
@@ -101,10 +133,11 @@ public class ProfileActivity extends AppCompatActivity {
         Log.d("fotogramLog", "follow the friend");
         RequestWithParams followRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "follow", mess -> {
             SessionInfo.getInstance().updateFollowedFriends(ProfileActivity.this);
+            MyDialog alert = new MyDialog();
+            alert.setMsg("You are now following this user!");
+            alert.show(getSupportFragmentManager(), "MyDialog");
         }, error -> {
-            Log.d("fotogramLogs", "error:" + new String(error.networkResponse.data));
-            UtilityMethods.manageCommunicationError(error);
-
+            UtilityMethods.manageCommunicationError(this, error);
         });
         followRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));
         followRequest.addParam("username", this.username);
@@ -115,9 +148,12 @@ public class ProfileActivity extends AppCompatActivity {
         Log.d("fotogramLog", "unfollow the friend");
         RequestWithParams unfollowRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "unfollow", mess -> {
             SessionInfo.getInstance().updateFollowedFriends(ProfileActivity.this);
+            MyDialog alert = new MyDialog();
+            alert.setMsg("You are not following this user anymore!");
+            alert.show(getSupportFragmentManager(), "MyDialog");
         }, error -> {
             Log.d("fotogramLogs", "error: " + new String(error.networkResponse.data));
-            UtilityMethods.manageCommunicationError(error);
+            UtilityMethods.manageCommunicationError(this, error);
         });
         unfollowRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));
         unfollowRequest.addParam("username", this.username);

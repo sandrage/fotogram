@@ -1,44 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/postcreation_title"
+            android:text="UPDATE PROFILE PHOTO"
+            style="@style/ActivityTitle" />
 
         <Button
             android:id="@+id/update_profile_photo_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search photo"
-            tools:layout_editor_absoluteX="200dp"
-            tools:layout_editor_absoluteY="0dp" />
+            style="@style/ButtonStyle"
+            android:text="IMPORT PHOTO"
+            android:drawableLeft="@drawable/ic_outline_add_photo_alternate_24px"
+            android:drawableTint="@color/colorDirtyWhite"
+            android:drawablePadding="10dp"
+            android:layout_above="@+id/profile_photo_updated"
+            android:layout_centerHorizontal="true" />
 
         <ImageView
             android:id="@+id/profile_photo_updated"
-            android:layout_width="406dp"
-            android:layout_height="200dp"
-            android:layout_weight="1" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true" />
 
         <Button
             android:id="@+id/action_saveNewPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            tools:layout_editor_absoluteX="200dp"
-            tools:layout_editor_absoluteY="0dp" />
-    </LinearLayout>
+            style="@style/ButtonStyle"
+            android:text="UPDATE"
+            android:layout_below="@+id/profile_photo_updated"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+        <RelativeLayout
+            android:id="@+id/showcase_bottomMenu"
+            style="@style/BottomNavBar"
+            android:background="@drawable/simple_gradient">
+
+            <ImageButton
+                android:id="@+id/action_goBack"
+                style="@style/BottomMenuItems"
+                app:srcCompat="@drawable/ic_round_arrow_back_24px" />
+
+            <ImageButton
+                android:id="@+id/action_ownProfile"
+                style="@style/BottomMenuItems"
+                android:layout_toRightOf="@id/action_goBack"
+                app:srcCompat="@drawable/ic_outline_face_24px" />
+
+            <ImageButton
+                android:id="@+id/action_createPost"
+                style="@style/BottomMenuItems"
+                android:layout_toRightOf="@id/action_ownProfile"
+                app:srcCompat="@drawable/ic_outline_add_photo_alternate_24px" />
+
+            <ImageButton
+                android:id="@+id/action_searchFriend"
+                style="@style/BottomMenuItems"
+                android:layout_marginRight="0dp"
+                android:layout_toRightOf="@id/action_createPost"
+                app:srcCompat="@drawable/ic_outline_search_24px" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

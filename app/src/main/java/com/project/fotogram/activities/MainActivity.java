@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(showCaseIntent);
 
         }, error -> {
-            UtilityMethods.manageCommunicationError(error);
+            UtilityMethods.manageCommunicationError(this, error);
             //TODO qua dovrei riportarlo alla login mostrandogli un messaggio di errore in rosso
         });
 

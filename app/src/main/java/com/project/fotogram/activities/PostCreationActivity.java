@@ -16,6 +16,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +37,15 @@ public class PostCreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postcreation);
+        ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
+        ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
+        ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
+        ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);
+        createPostImage.setOnClickListener(getMenuOnClickListener());
+        ownProfile.setOnClickListener(getMenuOnClickListener());
+        searchFriend.setOnClickListener(getMenuOnClickListener());
+        goBack.setOnClickListener(getMenuOnClickListener());
+
         Button searchPhotoButt = (Button) findViewById(R.id.action_searchPhoto);
         searchPhotoButt.setOnClickListener(new View.OnClickListener() {
             //todo perform this
@@ -73,7 +83,7 @@ public class PostCreationActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            UtilityMethods.manageCommunicationError(error);
+                            UtilityMethods.manageCommunicationError(PostCreationActivity.this, error);
                         }
                     });
                     Log.d("fotogramLogs", "imageToBeLoaded: " + imageToBeLoaded);
@@ -91,6 +101,32 @@ public class PostCreationActivity extends AppCompatActivity {
 
     }
 
+    public View.OnClickListener getMenuOnClickListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.action_createPost:
+                        Intent createPostIntent = new Intent(PostCreationActivity.this, PostCreationActivity.class);
+                        startActivity(createPostIntent);
+                        break;
+                    case R.id.action_ownProfile:
+                        Intent ownProfile = new Intent(PostCreationActivity.this, ProfileActivity.class);
+                        ownProfile.putExtra("username", SessionInfo.getInstance().getCurrentUsername(PostCreationActivity.this));
+                        startActivity(ownProfile);
+                        break;
+                    case R.id.action_searchFriend:
+                        Intent search = new Intent(PostCreationActivity.this, SearchActivity.class);
+                        startActivity(search);
+                        break;
+                    case R.id.action_goBack:
+                        finish();
+                        break;
+
+                }
+            }
+        };
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

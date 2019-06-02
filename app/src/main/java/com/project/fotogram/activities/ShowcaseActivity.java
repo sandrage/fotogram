@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -16,6 +17,7 @@ import com.project.fotogram.R;
 import com.project.fotogram.adapters.PostAdapter;
 import com.project.fotogram.communication.RequestWithParams;
 import com.project.fotogram.communication.VolleySingleton;
+import com.project.fotogram.model.Post;
 import com.project.fotogram.model.PostsList;
 import com.project.fotogram.model.SearchedFriends;
 import com.project.fotogram.model.SessionInfo;
@@ -38,14 +40,15 @@ public class ShowcaseActivity extends AppCompatActivity {
         ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
         ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
         ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
-        postsListView = (ListView) findViewById(R.id.postsList);
-
-        //Request all the wall posts
-        updateWall(true);
 
         createPostImage.setOnClickListener(getMenuOnClickListener());
         ownProfile.setOnClickListener(getMenuOnClickListener());
         searchFriend.setOnClickListener(getMenuOnClickListener());
+        
+        postsListView = (ListView) findViewById(R.id.postsList);
+
+        //Request all the wall posts
+        updateWall(true);
     }
 
     public View.OnClickListener getMenuOnClickListener() {
@@ -66,6 +69,9 @@ public class ShowcaseActivity extends AppCompatActivity {
                         Intent search = new Intent(ShowcaseActivity.this, SearchActivity.class);
                         startActivity(search);
                         break;
+                    case R.id.action_goBack:
+                        finish();
+                        break;
                 }
             }
         };
@@ -82,6 +88,18 @@ public class ShowcaseActivity extends AppCompatActivity {
                 //display them through the adapter
                 PostAdapter postAdapter = new PostAdapter(ShowcaseActivity.this, R.layout.posts_list_element, postsList.getPosts());
                 postsListView.setAdapter(postAdapter);
+                postsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Log.d("fotogramLogs", "ONITEMCLICK|: " + view + ", " + position);
+                        Post post = (Post) postsList.getPosts().get(position);
+                        Log.d("fotogramLogs", "ONITEMCLICK: " + post);
+                        Intent profileIntent = new Intent(ShowcaseActivity.this, ProfileActivity.class);
+                        profileIntent.putExtra("username", post.getUser());
+                        startActivity(profileIntent);
+                    }
+                });
+
                 //Updating the profile photos associated to the users creators of the posts returned
                 //Actually, I could ask for all the photos of my followed friends but here I only get 10 posts, so it would be an unecessary effort
                 if (withProfilePhotos) {
@@ -98,7 +116,7 @@ public class ShowcaseActivity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                UtilityMethods.manageCommunicationError(error);
+                                UtilityMethods.manageCommunicationError(ShowcaseActivity.this, error);
                             }
                         });
                         profilePhotoReq.addParam("session_id", SessionInfo.getInstance().getSessionId(ShowcaseActivity.this));
@@ -111,21 +129,10 @@ public class ShowcaseActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                UtilityMethods.manageCommunicationError(error);
+                UtilityMethods.manageCommunicationError(ShowcaseActivity.this, error);
             }
         });
         wallRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ShowcaseActivity.this));
         VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(wallRequest);
     }
-
-    public void viewUserProfile(View v) {
-        View usernameTextView = findViewById(v.getId());
-        Log.d("fotogramLogs", "view: " + usernameTextView + ", " + usernameTextView.getTag());
-        String username = (String) usernameTextView.getTag();
-        Intent profileIntent = new Intent(this, ProfileActivity.class);
-        profileIntent.putExtra("username", username);
-        startActivity(profileIntent);
-    }
-
-
 }
