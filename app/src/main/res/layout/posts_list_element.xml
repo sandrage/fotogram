@@ -55,5 +55,16 @@
             android:layout_width="match_parent"
             style="@style/PostListFrame"
             android:layout_below="@id/userProfileImage" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/postImage"
+            android:text="Creation Date: "
+            android:textAllCaps="true"
+            android:fontFamily="@font/robotocondensedbold"
+            android:textColor="@color/colorStroke"
+            android:textSize="12dp"
+            android:gravity="right" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
