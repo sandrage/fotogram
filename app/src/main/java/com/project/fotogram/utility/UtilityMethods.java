@@ -1,7 +1,6 @@
 package com.project.fotogram.utility;
 
 import android.Manifest;
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -36,10 +35,13 @@ public class UtilityMethods {
         return (errorMsg != null && !errorMsg.trim().equals("")) ? Constants.ERROR_CONVERSIONS.get(errorMsg) : "Unexpected error";
     }
 
-    public static void checkPermissions(Activity activity, int requestCode) {
+    public static void checkPermissions(FragmentActivity activity, int requestCode) {
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            //TODO SHOW AN EXPLANATION
+            MyDialog alert = new MyDialog();
+            alert.setMsg("To import a new photo we need the external storage permissions.");
+            alert.show(activity.getSupportFragmentManager(), "MyDialog");
+
             ActivityCompat.requestPermissions(activity,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     requestCode);

@@ -32,6 +32,7 @@ public class ProfilePostsAsyncTask extends AsyncTask<String, Void, UserData> {
 
     @Override
     protected UserData doInBackground(String... usernames) {
+        Log.d("fotogramLogs", "cerco profile info");
         RequestWithParams profileRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "profile", mess -> {
             Log.d("fotogramLogs", "messaggio: " + mess);
             Gson gson = new Gson();

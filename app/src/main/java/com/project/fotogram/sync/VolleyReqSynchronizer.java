@@ -32,6 +32,7 @@ public class VolleyReqSynchronizer {
                 Log.d("fotogramLogs", "Io " + Thread.currentThread().getId() + " mi interrompo");
             }
         }
+        this.finished = false;
     }
 
     public synchronized void release() {

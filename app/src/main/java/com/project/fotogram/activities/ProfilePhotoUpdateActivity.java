@@ -23,6 +23,7 @@ import com.android.volley.Request;
 import com.project.fotogram.R;
 import com.project.fotogram.communication.RequestWithParams;
 import com.project.fotogram.communication.VolleySingleton;
+import com.project.fotogram.dialogs.MyDialog;
 import com.project.fotogram.model.SessionInfo;
 import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
@@ -44,8 +45,14 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
         goBack.setOnClickListener(getMenuOnClickListener());
 
         Button searchPhotoButt = (Button) findViewById(R.id.update_profile_photo_button);
-        searchPhotoButt.setOnClickListener(new View.OnClickListener() {
-            //todo perform this
+        searchPhotoButt.setOnClickListener(getSearchPhotoButtonListener());
+
+        Button savePostButt = (Button) findViewById(R.id.action_saveNewPhoto);
+        savePostButt.setOnClickListener(getSavePostButtonListener());
+    }
+
+    public View.OnClickListener getSearchPhotoButtonListener() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(ProfilePhotoUpdateActivity.this,
@@ -57,10 +64,11 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
                     UtilityMethods.checkPermissions(ProfilePhotoUpdateActivity.this, 1053);
                 }
             }
-        });
+        };
+    }
 
-        Button savePostButt = (Button) findViewById(R.id.action_saveNewPhoto);
-        savePostButt.setOnClickListener(new View.OnClickListener() {
+    public View.OnClickListener getSavePostButtonListener() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("fotogramLogs", "save post cliccato!");
@@ -84,7 +92,7 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        };
     }
 
     public View.OnClickListener getMenuOnClickListener() {
@@ -121,7 +129,9 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
                     Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(galleryIntent, REQUEST_CODE);
                 } else {
-                    //TODO dovrei mostrare un messaggio con l'errore che non può accedere alla gallery
+                    MyDialog dialog = new MyDialog();
+                    dialog.setMsg("You don't have the permissions to access the storage");
+                    dialog.show(this.getSupportFragmentManager(), "MyDialog");
                 }
                 break;
             default:

@@ -34,9 +34,9 @@
 
         <ImageView
             android:id="@+id/loadedImage"
-            android:layout_below="@id/action_searchPhoto"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            android:layout_below="@id/action_searchPhoto" />
 
         <Button
             android:id="@+id/action_savePost"

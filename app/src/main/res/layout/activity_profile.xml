@@ -31,7 +31,8 @@
                 android:id="@+id/profileImage"
                 android:scaleType="fitXY"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_outline_account_box_24px" />
         </FrameLayout>
 
         <TextView
@@ -86,6 +87,7 @@
 
         <ListView
             android:id="@+id/profilePostsList"
+            style="@style/ListViewStyle"
             android:layout_marginTop="5dp"
             android:layout_below="@+id/profile_postTitle"
             android:layout_width="wrap_content"

@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }, error -> {
             UtilityMethods.manageCommunicationError(this, error);
-            //TODO qua dovrei riportarlo alla login mostrandogli un messaggio di errore in rosso
         });
 
         loginRequest.addParam("username", currentUsername);

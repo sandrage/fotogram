@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.project.fotogram.R;
 import com.project.fotogram.communication.RequestWithParams;
 import com.project.fotogram.communication.VolleySingleton;
+import com.project.fotogram.dialogs.MyDialog;
 import com.project.fotogram.model.SessionInfo;
 import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
@@ -47,25 +48,17 @@ public class PostCreationActivity extends AppCompatActivity {
         goBack.setOnClickListener(getMenuOnClickListener());
 
         Button searchPhotoButt = (Button) findViewById(R.id.action_searchPhoto);
-        searchPhotoButt.setOnClickListener(new View.OnClickListener() {
-            //todo perform this
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(PostCreationActivity.this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    Intent gallery = new Intent(Intent.ACTION_PICK,
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(gallery, REQUEST_CODE);
-                } else {
-                    UtilityMethods.checkPermissions(PostCreationActivity.this, 1052);
-                }
-            }
-        });
+        searchPhotoButt.setOnClickListener(getSearchPhotoButtonListener());
+
         Button savePostButt = (Button) findViewById(R.id.action_savePost);
-        savePostButt.setOnClickListener(new View.OnClickListener() {
+        savePostButt.setOnClickListener(getPostCreationButtonListener());
+    }
+
+    public View.OnClickListener getPostCreationButtonListener() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("fotogramLogs", "save post cliccato!");
+                Log.d("fotogramLogs", "save post cliccato! " + Thread.currentThread().getId());
                 try {
                     ImageView loadedImage = (ImageView) findViewById(R.id.loadedImage);
 
@@ -86,19 +79,34 @@ public class PostCreationActivity extends AppCompatActivity {
                             UtilityMethods.manageCommunicationError(PostCreationActivity.this, error);
                         }
                     });
-                    Log.d("fotogramLogs", "imageToBeLoaded: " + imageToBeLoaded);
-                    Log.d("fotogramLogs", "messaggio: " + postComment);
                     createPostRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(PostCreationActivity.this));
                     createPostRequest.addParam("img", imageToBeLoaded);
                     createPostRequest.addParam("message", postComment);
+                    Log.d("fotogramLogs", "on save post sto per chiamare! " + Thread.currentThread().getId());
                     VolleySingleton.getInstance(PostCreationActivity.this.getApplicationContext()).addToRequestQueue(createPostRequest);
                 } catch (Exception e) {
                     Log.d("fotogramLogs", e.getMessage());
+                    //TODO manage here the exception! what should I do?
                 }
 
             }
-        });
+        };
+    }
 
+    public View.OnClickListener getSearchPhotoButtonListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(PostCreationActivity.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    Intent gallery = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(gallery, REQUEST_CODE);
+                } else {
+                    UtilityMethods.checkPermissions(PostCreationActivity.this, 1052);
+                }
+            }
+        };
     }
 
     public View.OnClickListener getMenuOnClickListener() {
@@ -137,7 +145,9 @@ public class PostCreationActivity extends AppCompatActivity {
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(gallery, REQUEST_CODE);
                 } else {
-                    //todo MOSTRARE UN MESSAGGIO DI ERRORE per negazione permessi
+                    MyDialog dialog = new MyDialog();
+                    dialog.setMsg("You don't have the permissions to access the storage");
+                    dialog.show(this.getSupportFragmentManager(), "MyDialog");
                 }
                 break;
             default:

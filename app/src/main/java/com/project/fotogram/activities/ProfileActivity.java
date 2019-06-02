@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.project.fotogram.R;
@@ -21,8 +19,6 @@ import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
 
 public class ProfileActivity extends AppCompatActivity {
-    ListView listView;
-    TextView profileUsernameView;
     ImageView profileImgView;
     String username;
 
@@ -40,8 +36,6 @@ public class ProfileActivity extends AppCompatActivity {
         goBack.setOnClickListener(getMenuOnClickListener());
 
         this.username = getIntent().getStringExtra("username");
-        listView = (ListView) findViewById(R.id.profilePostsList);
-        profileUsernameView = (TextView) findViewById(R.id.profileUsername);
         profileImgView = (ImageView) findViewById(R.id.profileImage);
         SessionInfo sessionInfo = SessionInfo.getInstance();
         String currentUsername = sessionInfo.getCurrentUsername(this);
@@ -100,24 +94,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void retrieveProfileInfo() {
-        /*RequestWithParams profileRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "profile", mess -> {
-            Log.d("fotogramLogs", "messaggio: " + mess);
-            Gson gson = new Gson();
-            UserData user = gson.fromJson(mess, UserData.class);
-            profileUsernameView.setText(user.getUsername());
-            if (user.getImg() != null) {
-                byte[] decodedPostImageString = Base64.decode(user.getImg(), Base64.DEFAULT);
-                Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
-                profileImgView.setImageBitmap(decodedImageByte);
-                profileImgView.setBackgroundResource(R.drawable.rounded_button);
-            }
-            //display them through the adapter
-            UserDataAdapter userDataAdapter = new UserDataAdapter(ProfileActivity.this, R.layout.profile_list_element, user.getPosts());
-            listView.setAdapter(userDataAdapter);
-        }, error -> UtilityMethods.manageCommunicationError(this, error));
-        profileRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));
-        profileRequest.addParam("username", username);
-        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(profileRequest);*/
         new ProfilePostsAsyncTask(this).execute(this.username);
     }
 

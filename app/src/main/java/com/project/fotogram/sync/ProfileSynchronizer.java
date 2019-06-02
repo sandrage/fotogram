@@ -23,6 +23,7 @@ public class ProfileSynchronizer {
 
             }
         }
+        this.finished = false;
     }
 
     public synchronized void release() {

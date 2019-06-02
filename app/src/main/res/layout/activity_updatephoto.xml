@@ -27,9 +27,9 @@
             android:id="@+id/profile_photo_updated"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
-            android:layout_centerVertical="true" />
+            android:src="@drawable/ic_outline_account_box_24px" />
 
         <Button
             android:id="@+id/action_saveNewPhoto"
