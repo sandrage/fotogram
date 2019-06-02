@@ -29,5 +29,12 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_outline_account_box_24px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorStroke"
+            android:layout_below="@id/partialresult_userimage"
+            android:elevation="2dp" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
