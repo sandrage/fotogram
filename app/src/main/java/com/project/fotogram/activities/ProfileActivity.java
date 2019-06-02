@@ -1,11 +1,8 @@
 package com.project.fotogram.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,14 +11,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.google.gson.Gson;
 import com.project.fotogram.R;
-import com.project.fotogram.adapters.UserDataAdapter;
 import com.project.fotogram.communication.RequestWithParams;
 import com.project.fotogram.communication.VolleySingleton;
 import com.project.fotogram.dialogs.MyDialog;
 import com.project.fotogram.model.SessionInfo;
-import com.project.fotogram.model.UserData;
+import com.project.fotogram.sync.ProfilePostsAsyncTask;
 import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
 
@@ -70,9 +65,6 @@ public class ProfileActivity extends AppCompatActivity {
 
             });
         }
-
-        retrieveProfileInfo();
-
     }
 
     public View.OnClickListener getMenuOnClickListener() {
@@ -104,12 +96,11 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //todo MA DOVREI DAVVERO FARLO ALLA RESUME? LO FA DUE VOLTE SE NO // o farlo solo alla create
         retrieveProfileInfo();
     }
 
     private void retrieveProfileInfo() {
-        RequestWithParams profileRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "profile", mess -> {
+        /*RequestWithParams profileRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "profile", mess -> {
             Log.d("fotogramLogs", "messaggio: " + mess);
             Gson gson = new Gson();
             UserData user = gson.fromJson(mess, UserData.class);
@@ -126,7 +117,8 @@ public class ProfileActivity extends AppCompatActivity {
         }, error -> UtilityMethods.manageCommunicationError(this, error));
         profileRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));
         profileRequest.addParam("username", username);
-        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(profileRequest);
+        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(profileRequest);*/
+        new ProfilePostsAsyncTask(this).execute(this.username);
     }
 
     public void followTheFriend(View v) {

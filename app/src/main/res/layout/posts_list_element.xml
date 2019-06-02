@@ -57,14 +57,22 @@
             android:layout_below="@id/userProfileImage" />
 
         <TextView
+            android:id="@+id/showcase_creationdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/postImage"
-            android:text="Creation Date: "
-            android:textAllCaps="true"
-            android:fontFamily="@font/robotocondensedbold"
-            android:textColor="@color/colorStroke"
-            android:textSize="12dp"
-            android:gravity="right" />
+            android:layout_toLeftOf="@id/showcase_creationdatevalue"
+            android:text="creation date:"
+            style="@style/CreationDateStyle" />
+
+        <TextView
+            android:id="@+id/showcase_creationdatevalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CreationDateStyle"
+            android:paddingRight="20dp"
+            android:paddingLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/postImage" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.project.fotogram.R;
 import com.project.fotogram.model.SimplePost;
+import com.project.fotogram.utility.UtilityMethods;
 
 import java.util.List;
 
@@ -37,10 +38,13 @@ public class UserDataAdapter extends ArrayAdapter<SimplePost> {
         }
         SimplePost post = getItem(position);
         if (post != null) {
+            String parsedTimestamp = UtilityMethods.formatDate(post.getTimestamp());
             TextView postCommentView = (TextView) postsTemplate.findViewById(R.id.profile_postComment);
+            TextView postCreationDate = (TextView) postsTemplate.findViewById(R.id.profile_creationdatevalue);
             ImageView postImageView = (ImageView) postsTemplate.findViewById(R.id.profile_postImage);
 
             postCommentView.setText(post.getMsg());
+            postCreationDate.setText(parsedTimestamp);
 
             byte[] decodedPostImageString = Base64.decode(post.getImg(), Base64.DEFAULT);
             Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);

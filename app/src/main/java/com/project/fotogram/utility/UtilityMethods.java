@@ -11,6 +11,8 @@ import com.android.volley.VolleyError;
 import com.project.fotogram.dialogs.MyDialog;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UtilityMethods {
 
@@ -70,5 +72,20 @@ public class UtilityMethods {
         byteArray.reset();
         image.compress(Bitmap.CompressFormat.JPEG, 30, byteArray);
         return byteArray.toByteArray();
+    }
+
+    public static String formatDate(String date) {
+        String fromServerPattern = "yyyy-MM-dd HH:mm:ss.SSS";
+        Date parsed = null;
+        String parsedString = "";
+        try {
+            parsed = new SimpleDateFormat(fromServerPattern).parse(date);
+            String outputPattern = "dd-MM-yyyy HH:mm:ss";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(outputPattern);
+            parsedString = simpleDateFormat.format(parsed);
+
+        } catch (Exception e) {
+        }
+        return parsedString;
     }
 }

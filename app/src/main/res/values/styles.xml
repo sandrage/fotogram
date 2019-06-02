@@ -111,4 +111,12 @@
         <item name="android:divider">@drawable/listview_divider</item>
         <item name="android:dividerHeight">1dp</item>
     </style>
+
+    <style name="CreationDateStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/robotocondensedbold</item>
+        <item name="android:textColor">@color/colorStroke</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:gravity">right</item>
+    </style>
 </resources>
