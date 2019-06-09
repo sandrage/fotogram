@@ -19,7 +19,6 @@ import java.util.HashMap;
 
 public class SessionInfo {
     private static SessionInfo instance;
-    private FollowedFriends followedFriends;
     private HashMap<String, String> profilePhotos;
 
     public synchronized static SessionInfo getInstance() {
@@ -70,18 +69,18 @@ public class SessionInfo {
         editor.commit();
     }
 
-    public FollowedFriends getFollowedFriends() {
-        return followedFriends;
-    }
-
-    public synchronized void updateFollowedFriends(FragmentActivity activity) {
+    public synchronized void updateProfilePhotos(FragmentActivity activity) {
+        Log.d("fotogramLogs", "aggiorno le foto profilo!");
+        this.profilePhotos = new HashMap<>();
         RequestWithParams request = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "followed", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("fotogramLogs", "friends " + response);
+                Log.d("fotogramLogs", "new profile photos " + response);
                 Gson gson = new Gson();
                 FollowedFriends friends = gson.fromJson(response, FollowedFriends.class);
-                followedFriends = friends;
+                if (friends != null) {
+                    friends.getFollowed().stream().forEach(friend -> profilePhotos.put(friend.getName(), friend.getPicture()));
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -97,11 +96,5 @@ public class SessionInfo {
         return profilePhotos;
     }
 
-    public synchronized void addProfilePhotos(Friend profilePhoto) {
-        if (this.profilePhotos == null) {
-            this.profilePhotos = new HashMap<>();
-        }
-        this.profilePhotos.put(profilePhoto.getName(), profilePhoto.getPicture());
-    }
 
 }

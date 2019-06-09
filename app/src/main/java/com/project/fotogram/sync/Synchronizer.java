@@ -2,13 +2,13 @@ package com.project.fotogram.sync;
 
 import android.util.Log;
 
-public class ProfileSynchronizer {
-    private static ProfileSynchronizer sync;
+public class Synchronizer {
+    private static Synchronizer sync;
     private boolean finished = false;
 
-    public static synchronized ProfileSynchronizer getInstance() {
+    public static synchronized Synchronizer getInstance() {
         if (sync == null) {
-            sync = new ProfileSynchronizer();
+            sync = new Synchronizer();
         }
         return sync;
     }

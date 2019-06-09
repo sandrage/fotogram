@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.project.fotogram.utility.UtilityMethods;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PostAdapter extends ArrayAdapter<Post> {
     private int postsLayout;
@@ -56,8 +54,6 @@ public class PostAdapter extends ArrayAdapter<Post> {
             postsTemplate = layoutInflater.inflate(this.postsLayout, null);
         }
         Post post = getItem(position);
-        Log.d("fotogramLogs", "position: " + position + ", post: " + post.getUser());
-        Log.d("fotogramLogs", "posts: " + posts.stream().map(p -> p.getUser()).collect(Collectors.toList()));
         HashMap<String, String> profilePhotos = SessionInfo.getInstance().getProfilePhotos();
         if (post != null) {
             String parsedString = UtilityMethods.formatDate(post.getTimestamp());

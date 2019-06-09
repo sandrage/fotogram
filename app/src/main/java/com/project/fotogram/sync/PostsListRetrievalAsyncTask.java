@@ -23,10 +23,7 @@ import com.project.fotogram.model.SessionInfo;
 import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class PostsListRetrievalAsyncTask extends AsyncTask<Void, Void, List<Post>> {
     private FragmentActivity fragmentActivity;
@@ -43,10 +40,7 @@ public class PostsListRetrievalAsyncTask extends AsyncTask<Void, Void, List<Post
                 Gson gson = new Gson();
                 PostsList posts = gson.fromJson(mess, PostsList.class);
                 postsToBeReturned = posts.getPosts();
-                Set<String> userNames = posts.getPosts() != null ? posts.getPosts().stream().map(post -> post.getUser()).collect(Collectors.toSet()) : new HashSet<>();
-                Log.d("fotogramLogs", "users per cui chiamo la profile: " + userNames + ", " + Thread.currentThread().getId());
-                VolleyReqSynchronizer.getInstance().setSyncNumber(userNames.size());
-                new ProfilePhotoListRetrievalAsyncTask(fragmentActivity, userNames).start();
+                Synchronizer.getInstance().release();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -57,7 +51,7 @@ public class PostsListRetrievalAsyncTask extends AsyncTask<Void, Void, List<Post
         wallRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(fragmentActivity));
         Log.d("fotogramLogs", "mando la chiamata per posts: " + Thread.currentThread().getId());
         VolleySingleton.getInstance(this.fragmentActivity).addToRequestQueue(wallRequest);
-        VolleyReqSynchronizer.getInstance().acquire();
+        Synchronizer.getInstance().acquire();
         return postsToBeReturned;
     }
 

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setOnClickListener(this);
         } else {
             Log.d("fotogramLogs", "Ho trovato il session_id configurato!");
-            SessionInfo.getInstance().updateFollowedFriends(MainActivity.this);
+            SessionInfo.getInstance().updateProfilePhotos(MainActivity.this);
             Intent showCaseIntent = new Intent(MainActivity.this, ShowcaseActivity.class);
             startActivity(showCaseIntent);
         }
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("fotogramLogs", "token session: " + responseToken);
             SessionInfo.getInstance().setSessionId(MainActivity.this, responseToken);
             SessionInfo.getInstance().updateCurrentUsername(MainActivity.this, currentUsername);
-            SessionInfo.getInstance().updateFollowedFriends(MainActivity.this);
+            SessionInfo.getInstance().updateProfilePhotos(MainActivity.this);
             Intent showCaseIntent = new Intent(MainActivity.this, ShowcaseActivity.class);
             startActivity(showCaseIntent);
 

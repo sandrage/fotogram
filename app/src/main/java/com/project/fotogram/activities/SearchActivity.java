@@ -9,10 +9,12 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.google.gson.Gson;
@@ -29,9 +31,9 @@ import com.project.fotogram.utility.UtilityMethods;
 public class SearchActivity extends AppCompatActivity {
     private final int TRIGGER_AUTO_COMPLETE = 100;
     private final long AUTO_COMPLETE_DELAY = 300;
-    AutoCompleteTextView autoCompleteSearch;
     SearchListAdapter searchAdapter;
     Handler handler;
+    AutoCompleteTextView autoCompleteSearch;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -41,18 +43,19 @@ public class SearchActivity extends AppCompatActivity {
         ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
         ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
         ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
-        ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);
+        ImageButton dashboard = (ImageButton) findViewById(R.id.action_showcase);
+        /*ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);*/
         createPostImage.setOnClickListener(getMenuOnClickListener());
         ownProfile.setOnClickListener(getMenuOnClickListener());
         searchFriend.setOnClickListener(getMenuOnClickListener());
-        goBack.setOnClickListener(getMenuOnClickListener());
+        dashboard.setOnClickListener(getMenuOnClickListener());
+        /*goBack.setOnClickListener(getMenuOnClickListener());*/
 
-        //TextView selectedText = (TextView) findViewById(R.id.partialresult_username);
-        AutoCompleteTextView autoCompleteSearch = (AutoCompleteTextView) findViewById(R.id.action_searchUser);
+        autoCompleteSearch = (AutoCompleteTextView) findViewById(R.id.action_searchUser);
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
-                Log.d("fotogramLogs", "handler!!");
+                Log.d("fotogramLogs", "handler!!: " + msg);
                 if (msg.what == TRIGGER_AUTO_COMPLETE) {
                     if (!TextUtils.isEmpty(autoCompleteSearch.getText())) {
                         getSomeFriendsInfo(autoCompleteSearch.getText().toString());
@@ -64,18 +67,8 @@ public class SearchActivity extends AppCompatActivity {
         searchAdapter = new SearchListAdapter(SearchActivity.this, R.layout.search_list_element);
         autoCompleteSearch.setThreshold(1);
         autoCompleteSearch.setAdapter(searchAdapter);
-        autoCompleteSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("fotogramLogs", "searched user clicked!");
-                Friend searched = (Friend) parent.getAdapter().getItem(position);
-                Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
-                intent.putExtra("username", searched.getName());
-                startActivity(intent);
-
-            }
-        });
-
+        autoCompleteSearch.setOnItemClickListener(getAdapterClickListener());
+        autoCompleteSearch.setOnKeyListener(getOnKeyListener());
         autoCompleteSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,7 +88,51 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    public AdapterView.OnKeyListener getOnKeyListener() {
+        return new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Log.d("fotogramLogs", "ENTRO QUI!! key enter!!" + v);
+                    AutoCompleteTextView tview = (AutoCompleteTextView) v;
+                    RequestWithParams friendsList = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "users", success -> {
+                        Log.d("fotogramLogs", "ho ricevuto gli amici: " + success);
+                        Gson gson = new Gson();
+                        SearchedFriends friends = gson.fromJson(success, SearchedFriends.class);
+                        searchAdapter = new SearchListAdapter(SearchActivity.this, R.layout.search_list_element, friends.getUsers());
+                        ListView listView = (ListView) findViewById(R.id.searchFriendsResults);
+                        listView.setAdapter(searchAdapter);
+                        listView.setOnItemClickListener(getAdapterClickListener());
+                        tview.clearListSelection();
+                        tview.dismissDropDown();
+                        Log.d("fotogramLogs", "ho chiamato!!");
+                    }, error -> UtilityMethods.manageCommunicationError(SearchActivity.this, error));
+                    friendsList.addParam("session_id", SessionInfo.getInstance().getSessionId(SearchActivity.this));
+                    friendsList.addParam("usernamestart", tview.getText().toString());
+                    friendsList.addParam("limit", "15");
+                    VolleySingleton.getInstance(SearchActivity.this).addToRequestQueue(friendsList);
+
+                }
+                return true;
+            }
+        };
+    }
+
+    public AdapterView.OnItemClickListener getAdapterClickListener() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("fotogramLogs", "searched user clicked!");
+                Friend searched = (Friend) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(SearchActivity.this, ProfileActivity.class);
+                intent.putExtra("username", searched.getName());
+                startActivity(intent);
+                autoCompleteSearch.setText(searched.getName());
+
+            }
+        };
     }
 
     public View.OnClickListener getMenuOnClickListener() {
@@ -116,9 +153,13 @@ public class SearchActivity extends AppCompatActivity {
                         Intent search = new Intent(SearchActivity.this, SearchActivity.class);
                         startActivity(search);
                         break;
-                    case R.id.action_goBack:
-                        finish();
+                    case R.id.action_showcase:
+                        Intent dashb = new Intent(SearchActivity.this, ShowcaseActivity.class);
+                        startActivity(dashb);
                         break;
+                    /*case R.id.action_goBack:
+                        finish();
+                        break;*/
                 }
             }
         };
@@ -131,7 +172,7 @@ public class SearchActivity extends AppCompatActivity {
             SearchedFriends friends = gson.fromJson(success, SearchedFriends.class);
             searchAdapter.setData(friends.getUsers());
             searchAdapter.notifyDataSetChanged();
-            Log.d("fotogramLogs", "ho chiamato!!");
+            Log.d("fotogramLogs", "ho chiamato!! e showato dropdown");
         }, error -> UtilityMethods.manageCommunicationError(this, error));
         friendsList.addParam("session_id", SessionInfo.getInstance().getSessionId(this));
         friendsList.addParam("usernamestart", startsWith);

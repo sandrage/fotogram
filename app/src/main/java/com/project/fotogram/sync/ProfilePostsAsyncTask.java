@@ -38,12 +38,12 @@ public class ProfilePostsAsyncTask extends AsyncTask<String, Void, UserData> {
             Gson gson = new Gson();
             UserData user = gson.fromJson(mess, UserData.class);
             userData = user;
-            ProfileSynchronizer.getInstance().release();
+            Synchronizer.getInstance().release();
         }, error -> UtilityMethods.manageCommunicationError(this.activity, error));
         profileRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(this.activity));
         profileRequest.addParam("username", usernames[0]);
         VolleySingleton.getInstance(this.activity).addToRequestQueue(profileRequest);
-        ProfileSynchronizer.getInstance().acquire();
+        Synchronizer.getInstance().acquire();
         Log.d("fotogramLogs", "riprendo!");
         if (userData.getImg() != null) {
             byte[] decodedPostImageString = Base64.decode(userData.getImg(), Base64.DEFAULT);

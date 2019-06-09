@@ -34,6 +34,13 @@ public class SearchListAdapter extends ArrayAdapter<Friend> implements Filterabl
         this.callerContext = context;
     }
 
+    public SearchListAdapter(Context context, int layoutId, List<Friend> friendsList) {
+        super(context, layoutId, friendsList);
+        this.friends = friendsList;
+        this.layout = layoutId;
+        this.callerContext = context;
+    }
+
     public void setData(List<Friend> friends) {
         this.friends.clear();
         this.friends.addAll(friends);

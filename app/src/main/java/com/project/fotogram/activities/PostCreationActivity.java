@@ -41,11 +41,14 @@ public class PostCreationActivity extends AppCompatActivity {
         ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
         ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
         ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
-        ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);
+        ImageButton dashboard = (ImageButton) findViewById(R.id.action_showcase);
+        /*ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);*/
+
         createPostImage.setOnClickListener(getMenuOnClickListener());
         ownProfile.setOnClickListener(getMenuOnClickListener());
         searchFriend.setOnClickListener(getMenuOnClickListener());
-        goBack.setOnClickListener(getMenuOnClickListener());
+        dashboard.setOnClickListener(getMenuOnClickListener());
+        /*goBack.setOnClickListener(getMenuOnClickListener());*/
 
         Button searchPhotoButt = (Button) findViewById(R.id.action_searchPhoto);
         searchPhotoButt.setOnClickListener(getSearchPhotoButtonListener());
@@ -127,9 +130,13 @@ public class PostCreationActivity extends AppCompatActivity {
                         Intent search = new Intent(PostCreationActivity.this, SearchActivity.class);
                         startActivity(search);
                         break;
-                    case R.id.action_goBack:
-                        finish();
+                    case R.id.action_showcase:
+                        Intent dashb = new Intent(PostCreationActivity.this, ShowcaseActivity.class);
+                        startActivity(dashb);
                         break;
+                    /*case R.id.action_goBack:
+                        finish();
+                        break;*/
 
                 }
             }

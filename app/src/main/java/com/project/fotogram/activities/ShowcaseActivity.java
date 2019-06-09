@@ -21,13 +21,19 @@ public class ShowcaseActivity extends AppCompatActivity {
         ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
         ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
         ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
+        ImageButton dashboard = (ImageButton) findViewById(R.id.action_showcase);
 
         createPostImage.setOnClickListener(getMenuOnClickListener());
         ownProfile.setOnClickListener(getMenuOnClickListener());
         searchFriend.setOnClickListener(getMenuOnClickListener());
+        dashboard.setOnClickListener(getMenuOnClickListener());
 
-        //Request all the wall posts
-        updateWall(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateWall();
     }
 
     public View.OnClickListener getMenuOnClickListener() {
@@ -48,15 +54,19 @@ public class ShowcaseActivity extends AppCompatActivity {
                         Intent search = new Intent(ShowcaseActivity.this, SearchActivity.class);
                         startActivity(search);
                         break;
-                    case R.id.action_goBack:
-                        finish();
+                    case R.id.action_showcase:
+                        Intent dashb = new Intent(ShowcaseActivity.this, ShowcaseActivity.class);
+                        startActivity(dashb);
                         break;
+                    /*case R.id.action_goBack:
+                        finish();
+                        break;*/
                 }
             }
         };
     }
 
-    private void updateWall(boolean withProfilePhotos) {
+    private void updateWall() {
         new PostsListRetrievalAsyncTask(ShowcaseActivity.this).execute();
     }
 }

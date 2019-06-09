@@ -99,15 +99,20 @@
             style="@style/BottomNavBar"
             android:background="@drawable/simple_gradient">
 
-            <ImageButton
+            <!--<ImageButton
                 android:id="@+id/action_goBack"
                 style="@style/BottomMenuItems"
-                app:srcCompat="@drawable/ic_round_arrow_back_24px" />
+                app:srcCompat="@drawable/ic_round_arrow_back_24px" />-->
+
+            <ImageButton
+                android:id="@+id/action_showcase"
+                style="@style/BottomMenuItems"
+                app:srcCompat="@drawable/ic_round_home_24px" />
 
             <ImageButton
                 android:id="@+id/action_ownProfile"
                 style="@style/BottomMenuItems"
-                android:layout_toRightOf="@id/action_goBack"
+                android:layout_toRightOf="@id/action_showcase"
                 app:srcCompat="@drawable/ic_outline_face_24px" />
 
             <ImageButton

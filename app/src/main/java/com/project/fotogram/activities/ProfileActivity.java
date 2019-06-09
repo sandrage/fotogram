@@ -29,11 +29,14 @@ public class ProfileActivity extends AppCompatActivity {
         ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
         ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
         ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
-        ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);
+        ImageButton dashboard = (ImageButton) findViewById(R.id.action_showcase);
+        //ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);
+
         createPostImage.setOnClickListener(getMenuOnClickListener());
         ownProfile.setOnClickListener(getMenuOnClickListener());
         searchFriend.setOnClickListener(getMenuOnClickListener());
-        goBack.setOnClickListener(getMenuOnClickListener());
+        dashboard.setOnClickListener(getMenuOnClickListener());
+        //goBack.setOnClickListener(getMenuOnClickListener());
 
         this.username = getIntent().getStringExtra("username");
         profileImgView = (ImageView) findViewById(R.id.profileImage);
@@ -79,9 +82,13 @@ public class ProfileActivity extends AppCompatActivity {
                         Intent search = new Intent(ProfileActivity.this, SearchActivity.class);
                         startActivity(search);
                         break;
-                    case R.id.action_goBack:
-                        finish();
+                    case R.id.action_showcase:
+                        Intent dashb = new Intent(ProfileActivity.this, ShowcaseActivity.class);
+                        startActivity(dashb);
                         break;
+                    /*case R.id.action_goBack:
+                        finish();
+                        break;*/
                 }
             }
         };
@@ -100,7 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void followTheFriend(View v) {
         Log.d("fotogramLog", "follow the friend");
         RequestWithParams followRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "follow", mess -> {
-            SessionInfo.getInstance().updateFollowedFriends(ProfileActivity.this);
+            SessionInfo.getInstance().updateProfilePhotos(ProfileActivity.this);
             MyDialog alert = new MyDialog();
             alert.setMsg("You are now following this user!");
             alert.show(getSupportFragmentManager(), "MyDialog");
@@ -115,7 +122,8 @@ public class ProfileActivity extends AppCompatActivity {
     public void unfollowTheFriend(View v) {
         Log.d("fotogramLog", "unfollow the friend");
         RequestWithParams unfollowRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "unfollow", mess -> {
-            SessionInfo.getInstance().updateFollowedFriends(ProfileActivity.this);
+            //TODO sincronizzare?
+            SessionInfo.getInstance().updateProfilePhotos(ProfileActivity.this);
             MyDialog alert = new MyDialog();
             alert.setMsg("You are not following this user anymore!");
             alert.show(getSupportFragmentManager(), "MyDialog");
