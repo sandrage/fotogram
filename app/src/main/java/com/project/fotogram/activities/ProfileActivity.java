@@ -106,6 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void followTheFriend(View v) {
         Log.d("fotogramLog", "follow the friend");
+        //TODO sincronizzare?
         RequestWithParams followRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "follow", mess -> {
             SessionInfo.getInstance().updateProfilePhotos(ProfileActivity.this);
             MyDialog alert = new MyDialog();

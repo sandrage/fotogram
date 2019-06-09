@@ -61,6 +61,7 @@ public class PostCreationActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO sincronizzare
                 Log.d("fotogramLogs", "save post cliccato! " + Thread.currentThread().getId());
                 try {
                     ImageView loadedImage = (ImageView) findViewById(R.id.loadedImage);

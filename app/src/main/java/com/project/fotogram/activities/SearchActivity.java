@@ -77,7 +77,6 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d("fotogramLogs", "on text changed!");
                 handler.removeMessages(TRIGGER_AUTO_COMPLETE);
                 handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
                         AUTO_COMPLETE_DELAY);
@@ -96,7 +95,6 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    Log.d("fotogramLogs", "ENTRO QUI!! key enter!!" + v);
                     AutoCompleteTextView tview = (AutoCompleteTextView) v;
                     RequestWithParams friendsList = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "users", success -> {
                         Log.d("fotogramLogs", "ho ricevuto gli amici: " + success);
@@ -107,7 +105,6 @@ public class SearchActivity extends AppCompatActivity {
                         listView.setAdapter(resultSearchList);
                         listView.setOnItemClickListener(getAdapterClickListener());
                         tview.dismissDropDown();
-                        Log.d("fotogramLogs", "ho chiamato!!");
                     }, error -> UtilityMethods.manageCommunicationError(SearchActivity.this, error));
                     friendsList.addParam("session_id", SessionInfo.getInstance().getSessionId(SearchActivity.this));
                     friendsList.addParam("usernamestart", tview.getText().toString());
@@ -172,7 +169,6 @@ public class SearchActivity extends AppCompatActivity {
             SearchedFriends friends = gson.fromJson(success, SearchedFriends.class);
             searchAdapter.setData(friends.getUsers());
             searchAdapter.notifyDataSetChanged();
-            Log.d("fotogramLogs", "ho chiamato!! e showato dropdown");
         }, error -> UtilityMethods.manageCommunicationError(this, error));
         friendsList.addParam("session_id", SessionInfo.getInstance().getSessionId(this));
         friendsList.addParam("usernamestart", startsWith);

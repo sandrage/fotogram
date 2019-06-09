@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.project.fotogram.dialogs.MyDialog;
+import com.project.fotogram.dialogs.MyPermissionsDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -36,15 +37,10 @@ public class UtilityMethods {
     }
 
     public static void checkPermissions(FragmentActivity activity, int requestCode) {
-
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            MyDialog alert = new MyDialog();
-            alert.setMsg("To import a new photo we need the external storage permissions.");
-            alert.show(activity.getSupportFragmentManager(), "MyDialog");
-
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    requestCode);
+            MyPermissionsDialog permissionsDialog = new MyPermissionsDialog();
+            permissionsDialog.configurePermissionsDialog("To import a new photo we need the external storage permissions.", activity, requestCode);
+            permissionsDialog.show(activity.getSupportFragmentManager(), "MyDialog");
 
         } else {
             ActivityCompat.requestPermissions(activity,

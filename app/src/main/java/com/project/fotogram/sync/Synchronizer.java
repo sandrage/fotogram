@@ -16,9 +16,9 @@ public class Synchronizer {
     public synchronized void acquire() {
         while (!finished) {
             try {
-                Log.d("fotogramLogs", "acquire profile nanna!");
+                Log.d("fotogramLogs", "acquire profile wait!");
                 this.wait();
-                Log.d("fotogramLogs", "acquire profile sveglio!");
+                Log.d("fotogramLogs", "acquire profile after wait!");
             } catch (Exception e) {
 
             }
@@ -27,7 +27,7 @@ public class Synchronizer {
     }
 
     public synchronized void release() {
-        Log.d("fotogramLogs", "finito caricamento profilo! ti sveglio!");
+        Log.d("fotogramLogs", "finito caricamento profilo! sveglio il thread!");
         this.finished = true;
         this.notify();
     }
