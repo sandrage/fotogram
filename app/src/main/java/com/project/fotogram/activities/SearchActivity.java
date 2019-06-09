@@ -39,12 +39,12 @@ public class SearchActivity extends AppCompatActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_search);
-        Log.d("fotogramLogs", "entro quiii!!!");
         ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
         ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
         ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
         ImageButton dashboard = (ImageButton) findViewById(R.id.action_showcase);
         /*ImageButton goBack = (ImageButton) findViewById(R.id.action_goBack);*/
+
         createPostImage.setOnClickListener(getMenuOnClickListener());
         ownProfile.setOnClickListener(getMenuOnClickListener());
         searchFriend.setOnClickListener(getMenuOnClickListener());
@@ -77,6 +77,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("fotogramLogs", "on text changed!");
                 handler.removeMessages(TRIGGER_AUTO_COMPLETE);
                 handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
                         AUTO_COMPLETE_DELAY);
@@ -101,11 +102,10 @@ public class SearchActivity extends AppCompatActivity {
                         Log.d("fotogramLogs", "ho ricevuto gli amici: " + success);
                         Gson gson = new Gson();
                         SearchedFriends friends = gson.fromJson(success, SearchedFriends.class);
-                        searchAdapter = new SearchListAdapter(SearchActivity.this, R.layout.search_list_element, friends.getUsers());
+                        SearchListAdapter resultSearchList = new SearchListAdapter(SearchActivity.this, R.layout.search_list_element, friends.getUsers());
                         ListView listView = (ListView) findViewById(R.id.searchFriendsResults);
-                        listView.setAdapter(searchAdapter);
+                        listView.setAdapter(resultSearchList);
                         listView.setOnItemClickListener(getAdapterClickListener());
-                        tview.clearListSelection();
                         tview.dismissDropDown();
                         Log.d("fotogramLogs", "ho chiamato!!");
                     }, error -> UtilityMethods.manageCommunicationError(SearchActivity.this, error));
