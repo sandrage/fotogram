@@ -45,7 +45,7 @@ public class ProfilePostsAsyncTask extends AsyncTask<String, Void, UserData> {
         VolleySingleton.getInstance(this.activity).addToRequestQueue(profileRequest);
         Synchronizer.getInstance().acquire();
         Log.d("fotogramLogs", "riprendo!");
-        if (userData.getImg() != null) {
+        if (userData.getImg() != null && !userData.getImg().equalsIgnoreCase("")) {
             byte[] decodedPostImageString = Base64.decode(userData.getImg(), Base64.DEFAULT);
             this.image = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
         }

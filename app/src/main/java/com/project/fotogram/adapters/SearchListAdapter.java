@@ -63,16 +63,21 @@ public class SearchListAdapter extends ArrayAdapter<Friend> implements Filterabl
             view = LayoutInflater.from(parent.getContext()).inflate(this.layout, parent, false);
         }
         Friend friend = getItem(position);
-        if (friend != null) {
-            TextView username = (TextView) view.findViewById(R.id.partialresult_username);
-            username.setText(getItem(position).getName());
-            if (friend.getPicture() != null) {
-                ImageView userImage = (ImageView) view.findViewById(R.id.partialresult_userimage);
-                byte[] decodedPostImageString = Base64.decode(friend.getPicture(), Base64.DEFAULT);
-                Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
-                userImage.setImageBitmap(decodedImageByte);
+        try {
+            if (friend != null) {
+                TextView username = (TextView) view.findViewById(R.id.partialresult_username);
+                username.setText(getItem(position).getName());
+                if (friend.getPicture() != null) {
+                    ImageView userImage = (ImageView) view.findViewById(R.id.partialresult_userimage);
+                    byte[] decodedPostImageString = Base64.decode(friend.getPicture(), Base64.DEFAULT);
+                    Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
+                    userImage.setImageBitmap(decodedImageByte);
+                }
             }
+        } catch (Exception e) {
+            Log.e("fotogramLogs", "Unexpected exception: ", e);
         }
+
         return view;
     }
 
@@ -88,7 +93,6 @@ public class SearchListAdapter extends ArrayAdapter<Friend> implements Filterabl
             Log.d("fotogram", "contraint: " + constraint);
             if (constraint != null) {
                 Log.d("fotogramLogs", "constraint:: " + constraint.toString());
-                //getSomeFriendsInfo();
                 filterResults.count = friends.size();
                 filterResults.values = friends;
             }

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,29 +56,36 @@ public class PostAdapter extends ArrayAdapter<Post> {
         }
         Post post = getItem(position);
         HashMap<String, String> profilePhotos = SessionInfo.getInstance().getProfilePhotos();
-        if (post != null) {
-            String parsedString = UtilityMethods.formatDate(post.getTimestamp());
+        try {
+            if (post != null) {
+                String parsedString = UtilityMethods.formatDate(post.getTimestamp());
 
-            TextView usernameView = (TextView) postsTemplate.findViewById(R.id.creatorUsername);
-            TextView postCommentView = (TextView) postsTemplate.findViewById(R.id.postComment);
-            TextView creationDateView = (TextView) postsTemplate.findViewById(R.id.showcase_creationdatevalue);
-            ImageView postImageView = (ImageView) postsTemplate.findViewById(R.id.postImage);
-            ImageView creatorProfileImageView = (ImageView) postsTemplate.findViewById(R.id.userProfileImage);
+                TextView usernameView = (TextView) postsTemplate.findViewById(R.id.creatorUsername);
+                TextView postCommentView = (TextView) postsTemplate.findViewById(R.id.postComment);
+                TextView creationDateView = (TextView) postsTemplate.findViewById(R.id.showcase_creationdatevalue);
+                ImageView postImageView = (ImageView) postsTemplate.findViewById(R.id.postImage);
+                ImageView creatorProfileImageView = (ImageView) postsTemplate.findViewById(R.id.userProfileImage);
 
-            usernameView.setText(post.getUser());
-            postCommentView.setText(post.getMsg());
-            creationDateView.setText(parsedString);
+                usernameView.setText(post.getUser());
+                postCommentView.setText(post.getMsg());
+                creationDateView.setText(parsedString);
 
-            byte[] decodedPostImageString = Base64.decode(post.getImg(), Base64.DEFAULT);
-            Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
-            postImageView.setImageBitmap(decodedImageByte);
+                if (post.getImg() != null) {
+                    byte[] decodedPostImageString = Base64.decode(post.getImg(), Base64.DEFAULT);
+                    Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
+                    postImageView.setImageBitmap(decodedImageByte);
+                }
 
-            if (profilePhotos != null && profilePhotos.containsKey(post.getUser())) {
-                byte[] decodedProfileImage = Base64.decode(profilePhotos.get(post.getUser()), Base64.DEFAULT);
-                Bitmap decodedProfileImageByte = BitmapFactory.decodeByteArray(decodedProfileImage, 0, decodedProfileImage.length);
-                creatorProfileImageView.setImageBitmap(decodedProfileImageByte);
+                if (profilePhotos != null && profilePhotos.containsKey(post.getUser())) {
+                    byte[] decodedProfileImage = Base64.decode(profilePhotos.get(post.getUser()), Base64.DEFAULT);
+                    Bitmap decodedProfileImageByte = BitmapFactory.decodeByteArray(decodedProfileImage, 0, decodedProfileImage.length);
+                    creatorProfileImageView.setImageBitmap(decodedProfileImageByte);
+                }
             }
+        } catch (Exception e) {
+            Log.e("fotogramLogs", "Unexpected exception: ", e);
         }
+
         return postsTemplate;
     }
 }

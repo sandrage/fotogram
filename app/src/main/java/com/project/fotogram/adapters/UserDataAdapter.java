@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,19 +38,27 @@ public class UserDataAdapter extends ArrayAdapter<SimplePost> {
             postsTemplate = layoutInflater.inflate(this.postsLayout, null);
         }
         SimplePost post = getItem(position);
-        if (post != null) {
-            String parsedTimestamp = UtilityMethods.formatDate(post.getTimestamp());
-            TextView postCommentView = (TextView) postsTemplate.findViewById(R.id.profile_postComment);
-            TextView postCreationDate = (TextView) postsTemplate.findViewById(R.id.profile_creationdatevalue);
-            ImageView postImageView = (ImageView) postsTemplate.findViewById(R.id.profile_postImage);
+        try {
+            if (post != null) {
+                String parsedTimestamp = UtilityMethods.formatDate(post.getTimestamp());
+                TextView postCommentView = (TextView) postsTemplate.findViewById(R.id.profile_postComment);
+                TextView postCreationDate = (TextView) postsTemplate.findViewById(R.id.profile_creationdatevalue);
+                ImageView postImageView = (ImageView) postsTemplate.findViewById(R.id.profile_postImage);
 
-            postCommentView.setText(post.getMsg());
-            postCreationDate.setText(parsedTimestamp);
+                postCommentView.setText(post.getMsg());
+                postCreationDate.setText(parsedTimestamp);
 
-            byte[] decodedPostImageString = Base64.decode(post.getImg(), Base64.DEFAULT);
-            Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
-            postImageView.setImageBitmap(decodedImageByte);
+                if (post.getImg() != null) {
+                    byte[] decodedPostImageString = Base64.decode(post.getImg(), Base64.DEFAULT);
+                    Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
+                    postImageView.setImageBitmap(decodedImageByte);
+                }
+
+            }
+        } catch (Exception e) {
+            Log.e("fotogramLogs", "Unexpected exception: ", e);
         }
+
         return postsTemplate;
     }
 }
