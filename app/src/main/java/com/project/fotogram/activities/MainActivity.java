@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.project.fotogram.R;
 import com.project.fotogram.communication.RequestWithParams;
 import com.project.fotogram.communication.VolleySingleton;
+import com.project.fotogram.dialogs.MyDialog;
 import com.project.fotogram.model.SessionInfo;
 import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
@@ -48,20 +49,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView username = (TextView) findViewById(R.id.username);
         TextView password = (TextView) findViewById(R.id.password);
         final String currentUsername = username.getText() != null ? username.getText().toString() : "";
-        RequestWithParams loginRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "login", responseToken -> {
-            Log.d("fotogramLogs", "token session: " + responseToken);
-            SessionInfo.getInstance().setSessionId(MainActivity.this, responseToken);
-            SessionInfo.getInstance().updateCurrentUsername(MainActivity.this, currentUsername);
-            SessionInfo.getInstance().updateProfilePhotos(MainActivity.this);
-            Intent showCaseIntent = new Intent(MainActivity.this, ShowcaseActivity.class);
-            startActivity(showCaseIntent);
+        final String currentPassword = password.getText() != null ? password.getText().toString() : "";
+        if (currentUsername.trim().equalsIgnoreCase("") || currentPassword.trim().equalsIgnoreCase("")) {
+            MyDialog dialog = new MyDialog();
+            dialog.setMsg("Please, insert username and password to login");
+            dialog.show(getSupportFragmentManager(), "MyDialog");
+        } else {
+            RequestWithParams loginRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "login", responseToken -> {
+                Log.d("fotogramLogs", "token session: " + responseToken);
+                SessionInfo.getInstance().setSessionId(MainActivity.this, responseToken);
+                SessionInfo.getInstance().updateCurrentUsername(MainActivity.this, currentUsername);
+                SessionInfo.getInstance().updateProfilePhotos(MainActivity.this);
+                Intent showCaseIntent = new Intent(MainActivity.this, ShowcaseActivity.class);
+                startActivity(showCaseIntent);
 
-        }, error -> {
-            UtilityMethods.manageCommunicationError(this, error);
-        });
+            }, error -> {
+                UtilityMethods.manageCommunicationError(this, error);
+            });
 
-        loginRequest.addParam("username", currentUsername);
-        loginRequest.addParam("password", password.getText() != null ? password.getText().toString() : "");
-        VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(loginRequest);
+            loginRequest.addParam("username", currentUsername);
+            loginRequest.addParam("password", currentPassword);
+            VolleySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(loginRequest);
+        }
     }
 }

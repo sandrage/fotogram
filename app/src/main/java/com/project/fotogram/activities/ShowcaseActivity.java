@@ -28,6 +28,7 @@ public class ShowcaseActivity extends AppCompatActivity {
         searchFriend.setOnClickListener(getMenuOnClickListener());
         dashboard.setOnClickListener(getMenuOnClickListener());
 
+        dashboard.setPressed(true);
     }
 
     @Override

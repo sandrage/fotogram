@@ -1,7 +1,8 @@
 package com.project.fotogram.model;
 
 public class Friend {
-    private String name, picture;
+    private String name;
+    private String picture;
 
     public String getName() {
         return name;

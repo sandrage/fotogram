@@ -29,7 +29,7 @@
             android:layout_height="250dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
-            android:src="@drawable/ic_outline_account_box_24px" />
+            android:src="@drawable/ic_round_account_circle_24px" />
 
         <Button
             android:id="@+id/action_saveNewPhoto"
@@ -41,8 +41,7 @@
 
         <RelativeLayout
             android:id="@+id/showcase_bottomMenu"
-            style="@style/BottomNavBar"
-            android:background="@drawable/simple_gradient">
+            style="@style/BottomNavBar">
 
             <!--<ImageButton
                 android:id="@+id/action_goBack"

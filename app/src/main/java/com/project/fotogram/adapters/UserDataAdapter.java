@@ -52,6 +52,8 @@ public class UserDataAdapter extends ArrayAdapter<SimplePost> {
                     byte[] decodedPostImageString = Base64.decode(post.getImg(), Base64.DEFAULT);
                     Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
                     postImageView.setImageBitmap(decodedImageByte);
+                } else {
+                    postImageView.setImageBitmap(null);
                 }
 
             }

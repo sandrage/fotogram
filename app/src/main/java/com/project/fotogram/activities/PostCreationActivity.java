@@ -40,6 +40,7 @@ public class PostCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postcreation);
         ImageButton createPostImage = (ImageButton) findViewById(R.id.action_createPost);
+        createPostImage.setPressed(true);
         ImageButton ownProfile = (ImageButton) findViewById(R.id.action_ownProfile);
         ImageButton searchFriend = (ImageButton) findViewById(R.id.action_searchFriend);
         ImageButton dashboard = (ImageButton) findViewById(R.id.action_showcase);
@@ -59,51 +60,53 @@ public class PostCreationActivity extends AppCompatActivity {
     }
 
     public View.OnClickListener getPostCreationButtonListener() {
-        //TODO should I create 
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("fotogramLogs", "save post cliccato! " + Thread.currentThread().getId());
-                try {
-                    ImageView loadedImage = (ImageView) findViewById(R.id.loadedImage);
+                SessionInfo.getInstance().getExecutorService().submit(() -> {
+                    try {
+                        Log.d("fotogramLogs", "save post cliccato! dentro il thread " + Thread.currentThread().getId());
+                        ImageView loadedImage = (ImageView) findViewById(R.id.loadedImage);
 
-                    BitmapDrawable bitmapDrawable = (BitmapDrawable) loadedImage.getDrawable();
-                    if (bitmapDrawable != null) {
-                        Bitmap bitmap = bitmapDrawable.getBitmap();
-                        byte[] imageBytes = UtilityMethods.resizePhoto(Constants.MAX_POST_BYTES, bitmap);
-                        String imageToBeLoaded = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                        String postComment = ((TextView) findViewById(R.id.newPostComment)).getText().toString();
-                        RequestWithParams createPostRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "create_post", new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.d("fotogramLogs", "finito caricamento!");
-                                MyActionNeededDialog dialog = new MyActionNeededDialog();
-                                dialog.configurePermissionsDialog("Post created!", PostCreationActivity.this);
-                                dialog.show(getSupportFragmentManager(), "MyDialog");
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                UtilityMethods.manageCommunicationError(PostCreationActivity.this, error);
-                            }
-                        });
-                        createPostRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(PostCreationActivity.this));
-                        createPostRequest.addParam("img", imageToBeLoaded);
-                        createPostRequest.addParam("message", postComment);
-                        Log.d("fotogramLogs", "on save post sto per chiamare! " + Thread.currentThread().getId());
-                        VolleySingleton.getInstance(PostCreationActivity.this.getApplicationContext()).addToRequestQueue(createPostRequest);
-                    } else {
-                        MyDialog dialog = new MyDialog();
-                        dialog.setMsg("You need to upload a photo!");
+                        BitmapDrawable bitmapDrawable = (BitmapDrawable) loadedImage.getDrawable();
+                        if (bitmapDrawable != null) {
+                            Bitmap bitmap = bitmapDrawable.getBitmap();
+                            byte[] imageBytes = UtilityMethods.resizePhoto(Constants.MAX_POST_BYTES, bitmap);
+                            String imageToBeLoaded = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                            String postComment = ((TextView) findViewById(R.id.newPostComment)).getText().toString();
+                            RequestWithParams createPostRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "create_post", new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("fotogramLogs", "finito caricamento! thread: " + Thread.currentThread().getId());
+                                    MyActionNeededDialog dialog = new MyActionNeededDialog();
+                                    dialog.configurePermissionsDialog("Post created!", PostCreationActivity.this);
+                                    dialog.show(getSupportFragmentManager(), "MyDialog");
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    UtilityMethods.manageCommunicationError(PostCreationActivity.this, error);
+                                }
+                            });
+                            createPostRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(PostCreationActivity.this));
+                            createPostRequest.addParam("img", imageToBeLoaded);
+                            createPostRequest.addParam("message", postComment);
+                            Log.d("fotogramLogs", "on save post sto per chiamare! " + Thread.currentThread().getId());
+                            VolleySingleton.getInstance(PostCreationActivity.this.getApplicationContext()).addToRequestQueue(createPostRequest);
+                        } else {
+                            MyDialog dialog = new MyDialog();
+                            dialog.setMsg("You need to upload a photo!");
+                            dialog.show(getSupportFragmentManager(), "MyDialog");
+                        }
+
+                    } catch (Exception e) {
+                        Log.e("fotogramLogs", e.getMessage());
+                        MyActionNeededDialog dialog = new MyActionNeededDialog();
+                        dialog.configurePermissionsDialog("Unexpected error occured!", PostCreationActivity.this);
                         dialog.show(getSupportFragmentManager(), "MyDialog");
                     }
-
-                } catch (Exception e) {
-                    Log.d("fotogramLogs", e.getMessage());
-                    MyActionNeededDialog dialog = new MyActionNeededDialog();
-                    dialog.configurePermissionsDialog("Unexpected error occured!", PostCreationActivity.this);
-                    dialog.show(getSupportFragmentManager(), "MyDialog");
-                }
+                });
             }
         };
     }

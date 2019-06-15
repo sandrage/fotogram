@@ -34,14 +34,16 @@ public class ProfilePostsAsyncTask extends AsyncTask<String, Void, UserData> {
     protected UserData doInBackground(String... usernames) {
         Log.d("fotogramLogs", "cerco profile info");
         RequestWithParams profileRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "profile", mess -> {
-            Log.d("fotogramLogs", "messaggio: " + mess);
+            Log.d("fotogramLogs", "profile data: " + mess);
             Gson gson = new Gson();
             UserData user = gson.fromJson(mess, UserData.class);
             userData = user;
+            Log.d("fotogramLogs", "profile data: " + userData);
             Synchronizer.getInstance().release();
         }, error -> UtilityMethods.manageCommunicationError(this.activity, error));
         profileRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(this.activity));
         profileRequest.addParam("username", usernames[0]);
+        Log.d("fotogramLogs", "profile sessionId: " + SessionInfo.getInstance().getSessionId(this.activity));
         VolleySingleton.getInstance(this.activity).addToRequestQueue(profileRequest);
         Synchronizer.getInstance().acquire();
         Log.d("fotogramLogs", "riprendo!");
@@ -60,8 +62,9 @@ public class ProfilePostsAsyncTask extends AsyncTask<String, Void, UserData> {
         ImageView profileImgView = (ImageView) this.activity.findViewById(R.id.profileImage);
 
         profileUsernameView.setText(userData.getUsername());
-        profileImgView.setImageBitmap(this.image);
-
+        if (this.image != null) {
+            profileImgView.setImageBitmap(this.image);
+        }
         //display them through the adapter
         UserDataAdapter userDataAdapter = new UserDataAdapter(this.activity, R.layout.profile_list_element, userData.getPosts());
         listView.setAdapter(userDataAdapter);

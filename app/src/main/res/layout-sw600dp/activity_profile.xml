@@ -31,7 +31,7 @@
                 android:id="@+id/profileImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_outline_account_box_24px" />
+                android:src="@drawable/ic_round_account_circle_24px" />
         </FrameLayout>
 
         <TextView
@@ -95,8 +95,7 @@
 
         <RelativeLayout
             android:id="@+id/showcase_bottomMenu"
-            style="@style/BottomNavBar"
-            android:background="@drawable/simple_gradient">
+            style="@style/BottomNavBar">
 
             <!--<ImageButton
                 android:id="@+id/action_goBack"

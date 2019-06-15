@@ -35,11 +35,6 @@
         <item name="android:background">@drawable/textinput_border</item>
     </style>
 
-    <style name="CircularFrame" parent="Widget.AppCompat.ImageButton">
-        <item name="android:background">@drawable/rounded_button</item>
-        <item name="android:elevation">2dp</item>
-    </style>
-
     <style name="PostListFrame" parent="Widget.AppCompat.ImageButton">
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
@@ -66,7 +61,7 @@
     <style name="BottomMenuItems" parent="Widget.AppCompat.ImageButton">
         <item name="android:layout_width">46dp</item>
         <item name="android:layout_height">46dp</item>
-        <item name="android:background">@null</item>
+        <item name="android:background">@drawable/rounded_button</item>
         <item name="android:layout_marginRight">50dp</item>
         <item name="android:tint">@color/colorDirtyWhite</item>
     </style>
@@ -77,12 +72,14 @@
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:gravity">center</item>
         <item name="android:elevation">2dp</item>
+        <item name="android:background">@null</item>
     </style>
 
     <style name="PostComment" parent="TextAppearance.AppCompat">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:fontFamily">@font/robotocondensedbold</item>
         <item name="android:textSize">14dp</item>
+        <item name="android:layout_marginRight">10dp</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
@@ -99,7 +96,8 @@
         <item name="android:fontFamily">@font/robotocondensedbold</item>
         <item name="android:textColor">@color/colorDirtyWhite</item>
         <item name="android:layout_alignParentTop">true</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">italic</item>
         <item name="android:background">@drawable/simple_gradient</item>
         <item name="android:elevation">3dp</item>
     </style>

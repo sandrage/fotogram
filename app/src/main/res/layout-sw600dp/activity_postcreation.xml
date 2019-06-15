@@ -48,8 +48,7 @@
 
         <RelativeLayout
             android:id="@+id/showcase_bottomMenu"
-            style="@style/BottomNavBar"
-            android:background="@drawable/simple_gradient">
+            style="@style/BottomNavBar">
 
             <!--<ImageButton
                 android:id="@+id/action_goBack"

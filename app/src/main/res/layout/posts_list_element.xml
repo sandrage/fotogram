@@ -15,7 +15,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_outline_account_box_24px" />
+            android:src="@drawable/ic_round_account_circle_24px" />
 
         <TextView
             android:id="@+id/creatorUsername"

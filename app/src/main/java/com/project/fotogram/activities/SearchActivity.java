@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
         searchFriend.setOnClickListener(getMenuOnClickListener());
         dashboard.setOnClickListener(getMenuOnClickListener());
         /*goBack.setOnClickListener(getMenuOnClickListener());*/
-
+        searchFriend.setPressed(true);
         autoCompleteSearch = (AutoCompleteTextView) findViewById(R.id.action_searchUser);
         handler = new Handler(new Handler.Callback() {
             @Override
@@ -87,7 +87,12 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        autoCompleteSearch.setText("");
     }
 
     public AdapterView.OnKeyListener getOnKeyListener() {

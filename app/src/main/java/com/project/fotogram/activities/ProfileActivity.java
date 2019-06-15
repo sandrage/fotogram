@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -43,6 +44,11 @@ public class ProfileActivity extends AppCompatActivity {
         SessionInfo sessionInfo = SessionInfo.getInstance();
         String currentUsername = sessionInfo.getCurrentUsername(this);
         if (this.username.equals(currentUsername)) {
+            ownProfile.setPressed(true);
+            Button followButt = (Button) findViewById(R.id.follow_user);
+            Button unfollowButt = (Button) findViewById(R.id.unfollow_user);
+            followButt.setVisibility(View.INVISIBLE);
+            unfollowButt.setVisibility(View.INVISIBLE);
             ImageButton prefs = (ImageButton) findViewById(R.id.action_preferences);
             prefs.setVisibility(View.VISIBLE);
             prefs.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
             alert.setMsg("You are not following this user anymore!");
             alert.show(getSupportFragmentManager(), "MyDialog");
         }, error -> {
-            Log.d("fotogramLogs", "error: " + new String(error.networkResponse.data));
+            Log.e("fotogramLogs", "error: " + new String(error.networkResponse.data));
             UtilityMethods.manageCommunicationError(this, error);
         });
         unfollowRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(ProfileActivity.this));

@@ -57,32 +57,44 @@ public class PostAdapter extends ArrayAdapter<Post> {
             postsTemplate = layoutInflater.inflate(this.postsLayout, null);
         }
         Post post = getItem(position);
-        HashMap<String, String> profilePhotos = SessionInfo.getInstance().getProfilePhotos();
+        ImageView creatorProfileImageView = (ImageView) postsTemplate.findViewById(R.id.userProfileImage);
+        ImageView postImageView = (ImageView) postsTemplate.findViewById(R.id.postImage);
         try {
+
             if (post != null) {
+
                 String parsedString = UtilityMethods.formatDate(post.getTimestamp());
 
                 TextView usernameView = (TextView) postsTemplate.findViewById(R.id.creatorUsername);
                 TextView postCommentView = (TextView) postsTemplate.findViewById(R.id.postComment);
                 TextView creationDateView = (TextView) postsTemplate.findViewById(R.id.showcase_creationdatevalue);
-                ImageView postImageView = (ImageView) postsTemplate.findViewById(R.id.postImage);
-                ImageView creatorProfileImageView = (ImageView) postsTemplate.findViewById(R.id.userProfileImage);
+
+                HashMap<String, String> profilePhotos = SessionInfo.getInstance().getProfilePhotos();
 
                 usernameView.setText(post.getUser());
                 postCommentView.setText(post.getMsg());
                 creationDateView.setText(parsedString);
 
-                if (post.getImg() != null) {
+                if (post.getImg() != null && !post.getImg().trim().equalsIgnoreCase("")) {
                     byte[] decodedPostImageString = Base64.decode(post.getImg(), Base64.DEFAULT);
                     Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
                     postImageView.setImageBitmap(decodedImageByte);
+                } else {
+                    postImageView.setImageBitmap(null);
                 }
-
-                if (profilePhotos != null && profilePhotos.containsKey(post.getUser())) {
-                    byte[] decodedProfileImage = Base64.decode(profilePhotos.get(post.getUser()), Base64.DEFAULT);
+                String profilePhotoString = profilePhotos.get(post.getUser());
+                Log.d("fotogramLogs", "profile photo: " + profilePhotoString + ", per l'utente: " + post.getUser());
+                if (profilePhotos != null && profilePhotos.containsKey(post.getUser()) && profilePhotoString != null) {
+                    byte[] decodedProfileImage = Base64.decode(profilePhotoString, Base64.DEFAULT);
                     Bitmap profilePhoto = BitmapFactory.decodeByteArray(decodedProfileImage, 0, decodedProfileImage.length);
                     creatorProfileImageView.setImageBitmap(UtilityMethods.getRoundedBitmapToDisplay(profilePhoto, profilePhoto.getWidth(), profilePhoto.getHeight()));
+                } else {
+                    creatorProfileImageView.setImageBitmap(null);
+                    creatorProfileImageView.setImageDrawable(this.context.getResources().getDrawable(R.drawable.ic_round_account_circle_24px, null));
                 }
+            } else {
+                creatorProfileImageView.setImageBitmap(null);
+                creatorProfileImageView.setImageDrawable(this.context.getResources().getDrawable(R.drawable.ic_round_account_circle_24px, null));
             }
         } catch (Exception e) {
             Log.e("fotogramLogs", "Unexpected exception: ", e);

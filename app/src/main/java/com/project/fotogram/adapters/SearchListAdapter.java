@@ -43,7 +43,7 @@ public class SearchListAdapter extends ArrayAdapter<Friend> implements Filterabl
     }
 
     public void setData(List<Friend> friends) {
-        this.friends.clear();
+        this.friends = new ArrayList<>();
         this.friends.addAll(friends);
     }
 
@@ -67,14 +67,18 @@ public class SearchListAdapter extends ArrayAdapter<Friend> implements Filterabl
         try {
             if (friend != null) {
                 TextView username = (TextView) view.findViewById(R.id.partialresult_username);
+                ImageView userImage = (ImageView) view.findViewById(R.id.partialresult_userimage);
                 username.setText(getItem(position).getName());
                 if (friend.getPicture() != null) {
-                    ImageView userImage = (ImageView) view.findViewById(R.id.partialresult_userimage);
                     if (friend.getPicture() != null) {
+                        Log.d("fotogramLogs", "profileName:" + friend.getName() + "\t" + "profilePhoto string: " + friend.getPicture());
                         byte[] decodedPostImageString = Base64.decode(friend.getPicture(), Base64.DEFAULT);
                         Bitmap bitm = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
                         userImage.setImageBitmap(UtilityMethods.getRoundedBitmapToDisplay(bitm, bitm.getWidth(), bitm.getHeight()));
                     }
+                } else {
+                    userImage.setImageBitmap(null);
+                    userImage.setImageDrawable(this.callerContext.getResources().getDrawable(R.drawable.ic_round_account_circle_24px, null));
                 }
             }
         } catch (Exception e) {
