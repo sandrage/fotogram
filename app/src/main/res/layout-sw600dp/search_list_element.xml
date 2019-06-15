@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/partialresult_username"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/partialresult_userimage"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/partialresult_userimage"
+            android:text="Name"
+            android:fontFamily="@font/robotocondensedbold"
+            android:textSize="16dp"
+            android:textColor="@color/colorViolet" />
+
+        <ImageView
+            android:id="@+id/partialresult_userimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_outline_account_box_24px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorStroke"
+            android:layout_below="@id/partialresult_userimage"
+            android:elevation="2dp" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

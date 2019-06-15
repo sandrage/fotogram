@@ -5,8 +5,8 @@ import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -56,7 +56,7 @@ public class PostsListRetrievalAsyncTask extends AsyncTask<Void, Void, List<Post
     }
 
     protected void onPostExecute(List<Post> posts) {
-        ListView postsListView = (ListView) this.fragmentActivity.findViewById(R.id.postsList);
+        AbsListView postsListView = (AbsListView) this.fragmentActivity.findViewById(R.id.postsList);
         Log.d("fotogramLogs", "popolo l'adapter: " + Thread.currentThread().getId());
         PostAdapter postAdapter = new PostAdapter(this.fragmentActivity, R.layout.posts_list_element, posts);
         postsListView.setAdapter(postAdapter);

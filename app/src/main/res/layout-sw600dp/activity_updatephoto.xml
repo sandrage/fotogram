@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/postcreation_title"
+            android:text="UPDATE PROFILE PHOTO"
+            style="@style/ActivityTitle" />
+
+        <Button
+            android:id="@+id/update_profile_photo_button"
+            style="@style/ButtonStyle"
+            android:text="IMPORT PHOTO"
+            android:drawableLeft="@drawable/ic_outline_add_photo_alternate_24px"
+            android:drawableTint="@color/colorDirtyWhite"
+            android:drawablePadding="10dp"
+            android:layout_above="@+id/profile_photo_updated"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/profile_photo_updated"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_outline_account_box_24px" />
+
+        <Button
+            android:id="@+id/action_saveNewPhoto"
+            style="@style/ButtonStyle"
+            android:text="UPDATE"
+            android:layout_below="@+id/profile_photo_updated"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+        <RelativeLayout
+            android:id="@+id/showcase_bottomMenu"
+            style="@style/BottomNavBar"
+            android:background="@drawable/simple_gradient">
+
+            <!--<ImageButton
+                android:id="@+id/action_goBack"
+                style="@style/BottomMenuItems"
+                app:srcCompat="@drawable/ic_round_arrow_back_24px" />-->
+
+            <ImageButton
+                android:id="@+id/action_showcase"
+                style="@style/BottomMenuItems"
+                app:srcCompat="@drawable/ic_round_home_24px" />
+
+            <ImageButton
+                android:id="@+id/action_ownProfile"
+                style="@style/BottomMenuItems"
+                android:layout_toRightOf="@id/action_showcase"
+                app:srcCompat="@drawable/ic_outline_face_24px" />
+
+            <ImageButton
+                android:id="@+id/action_createPost"
+                style="@style/BottomMenuItems"
+                android:layout_toRightOf="@id/action_ownProfile"
+                app:srcCompat="@drawable/ic_outline_add_photo_alternate_24px" />
+
+            <ImageButton
+                android:id="@+id/action_searchFriend"
+                style="@style/BottomMenuItems"
+                android:layout_marginRight="0dp"
+                android:layout_toRightOf="@id/action_createPost"
+                app:srcCompat="@drawable/ic_outline_search_24px" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

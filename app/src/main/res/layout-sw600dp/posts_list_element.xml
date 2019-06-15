@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants">
+
+        <ImageView
+            android:id="@+id/userProfileImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_outline_account_box_24px" />
+
+        <TextView
+            android:id="@+id/creatorUsername"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:text="Username"
+            android:layout_toRightOf="@id/userProfileImage"
+            android:paddingLeft="10dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:fontFamily="@font/robotocondensedbold"
+            android:textColor="@color/colorFuxia"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/profile_arrowRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LeftArrowComment"
+            android:layout_toRightOf="@id/userProfileImage"
+            android:layout_below="@id/creatorUsername"
+            android:layout_alignTop="@id/postComment" />
+
+        <TextView
+            android:id="@+id/postComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="80dp"
+            android:layout_below="@id/creatorUsername"
+            android:layout_toRightOf="@id/profile_arrowRight"
+            android:layout_alignBottom="@id/userProfileImage"
+            style="@style/PostComment"
+            android:text="Comment description" />
+
+        <ImageView
+            android:id="@+id/postImage"
+            android:layout_width="match_parent"
+            style="@style/PostListFrame"
+            android:layout_below="@id/userProfileImage" />
+
+        <TextView
+            android:id="@+id/showcase_creationdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/postImage"
+            android:layout_toLeftOf="@id/showcase_creationdatevalue"
+            android:text="creation date:"
+            style="@style/CreationDateStyle" />
+
+        <TextView
+            android:id="@+id/showcase_creationdatevalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/CreationDateStyle"
+            android:paddingRight="20dp"
+            android:paddingLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/postImage" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

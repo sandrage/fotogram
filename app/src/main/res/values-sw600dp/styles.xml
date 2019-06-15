@@ -1,0 +1,135 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_gradient</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:layout_margin">12dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/colorViolet</item>
+        <item name="android:textColorHint">@color/colorViolet</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_width">280dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/textinput_border</item>
+    </style>
+
+    <style name="CircularFrame" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="PostListFrame" parent="Widget.AppCompat.ImageButton">
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">300dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:foregroundGravity">center</item>
+    </style>
+
+    <style name="PostListProfileFrame" parent="Widget.AppCompat.ImageButton">
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:foregroundGravity">center</item>
+    </style>
+
+    <style name="BottomMenuItems" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_width">46dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_marginRight">50dp</item>
+        <item name="android:tint">@color/colorDirtyWhite</item>
+    </style>
+
+    <style name="BottomNavBar" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="PostComment" parent="TextAppearance.AppCompat">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:fontFamily">@font/robotocondensedbold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="LeftArrowComment" parent="TextAppearance.AppCompat">
+        <item name="android:drawableLeft">@drawable/ic_outline_chevron_right_24px</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="ActivityTitle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:textSize">26dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:fontFamily">@font/robotocondensedbold</item>
+        <item name="android:textColor">@color/colorDirtyWhite</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/simple_gradient</item>
+        <item name="android:elevation">3dp</item>
+    </style>
+
+    <style name="ButtonWhiteStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/colorDirtyWhite</item>
+        <item name="android:textColor">@color/colorFuxia</item>
+        <item name="android:fontFamily">@font/robotocondensedbold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="ListViewStyle" parent="Widget.AppCompat.ListView">
+        <item name="android:divider">@drawable/listview_divider</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="CreationDateStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/robotocondensedbold</item>
+        <item name="android:textColor">@color/colorStroke</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:gravity">right</item>
+    </style>
+</resources>

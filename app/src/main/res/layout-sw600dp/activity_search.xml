@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <AutoCompleteTextView
+            android:id="@+id/action_searchUser"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:dropDownWidth="match_parent"
+            android:hint="Search a user"
+            android:drawableLeft="@drawable/ic_outline_search_24px"
+            android:drawableTint="@color/colorViolet" />
+
+        <ListView
+            android:id="@+id/searchFriendsResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/action_searchUser"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            style="@style/ListViewStyle"
+            android:layout_above="@id/showcase_bottomMenu" />
+
+        <RelativeLayout
+            android:id="@+id/showcase_bottomMenu"
+            style="@style/BottomNavBar"
+            android:background="@drawable/simple_gradient">
+
+            <!--<ImageButton
+                android:id="@+id/action_goBack"
+                style="@style/BottomMenuItems"
+                app:srcCompat="@drawable/ic_round_arrow_back_24px" />-->
+
+            <ImageButton
+                android:id="@+id/action_showcase"
+                style="@style/BottomMenuItems"
+                app:srcCompat="@drawable/ic_round_home_24px" />
+
+            <ImageButton
+                android:id="@+id/action_ownProfile"
+                style="@style/BottomMenuItems"
+                android:layout_toRightOf="@id/action_showcase"
+                app:srcCompat="@drawable/ic_outline_face_24px" />
+
+            <ImageButton
+                android:id="@+id/action_createPost"
+                style="@style/BottomMenuItems"
+                android:layout_toRightOf="@id/action_ownProfile"
+                app:srcCompat="@drawable/ic_outline_add_photo_alternate_24px" />
+
+            <ImageButton
+                android:id="@+id/action_searchFriend"
+                style="@style/BottomMenuItems"
+                android:layout_marginRight="0dp"
+                android:layout_toRightOf="@id/action_createPost"
+                app:srcCompat="@drawable/ic_outline_search_24px" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

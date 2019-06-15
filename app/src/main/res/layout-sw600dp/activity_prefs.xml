@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/postcreation_title"
+            android:text="OPTIONS"
+            style="@style/ActivityTitle" />
+
+        <Button
+            android:id="@+id/action_logout"
+            android:text="LOGOUT"
+            style="@style/ButtonWhiteStyle"
+            android:drawableLeft="@drawable/ic_baseline_exit_to_app_24px"
+            android:drawablePadding="16dp"
+            android:layout_below="@id/postcreation_title"
+            android:drawableTint="@color/colorFuxia" />
+
+        <Button
+            android:id="@+id/action_goback"
+            android:text="RETURN"
+            style="@style/ButtonWhiteStyle"
+            android:drawableLeft="@drawable/ic_round_arrow_back_24px"
+            android:drawablePadding="16dp"
+            android:layout_below="@id/action_logout"
+            android:drawableTint="@color/colorFuxia" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
