@@ -47,7 +47,8 @@ public class ProfilePostsAsyncTask extends AsyncTask<String, Void, UserData> {
         Log.d("fotogramLogs", "riprendo!");
         if (userData.getImg() != null && !userData.getImg().equalsIgnoreCase("")) {
             byte[] decodedPostImageString = Base64.decode(userData.getImg(), Base64.DEFAULT);
-            this.image = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
+            Bitmap profilePhotoBit = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
+            this.image = UtilityMethods.getRoundedBitmapToDisplay(profilePhotoBit, profilePhotoBit.getWidth(), profilePhotoBit.getHeight());
         }
         return userData;
     }
@@ -60,6 +61,7 @@ public class ProfilePostsAsyncTask extends AsyncTask<String, Void, UserData> {
 
         profileUsernameView.setText(userData.getUsername());
         profileImgView.setImageBitmap(this.image);
+
         //display them through the adapter
         UserDataAdapter userDataAdapter = new UserDataAdapter(this.activity, R.layout.profile_list_element, userData.getPosts());
         listView.setAdapter(userDataAdapter);

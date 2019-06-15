@@ -2,6 +2,11 @@ package com.project.fotogram.utility;
 
 import android.Manifest;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -66,9 +71,9 @@ public class UtilityMethods {
 
     public static byte[] resizePhoto(Bitmap image) {
         ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-        image = Bitmap.createScaledBitmap(image, 100, 100, false);
+        image = Bitmap.createScaledBitmap(image, 200, 200, false);
         byteArray.reset();
-        image.compress(Bitmap.CompressFormat.JPEG, 30, byteArray);
+        image.compress(Bitmap.CompressFormat.JPEG, 100, byteArray);
         return byteArray.toByteArray();
     }
 
@@ -85,5 +90,19 @@ public class UtilityMethods {
         } catch (Exception e) {
         }
         return parsedString;
+    }
+
+    public static Bitmap getRoundedBitmapToDisplay(Bitmap profilePhotoBitmap, int width, int height) {
+        Bitmap rounded = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(rounded);
+
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, profilePhotoBitmap.getWidth(), profilePhotoBitmap.getHeight());
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        canvas.drawCircle(profilePhotoBitmap.getWidth() / 2, profilePhotoBitmap.getHeight() / 2, profilePhotoBitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(profilePhotoBitmap, rect, rect, paint);
+        return rounded;
     }
 }

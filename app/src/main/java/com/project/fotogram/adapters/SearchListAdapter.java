@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.project.fotogram.R;
 import com.project.fotogram.model.Friend;
+import com.project.fotogram.utility.UtilityMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +70,11 @@ public class SearchListAdapter extends ArrayAdapter<Friend> implements Filterabl
                 username.setText(getItem(position).getName());
                 if (friend.getPicture() != null) {
                     ImageView userImage = (ImageView) view.findViewById(R.id.partialresult_userimage);
-                    byte[] decodedPostImageString = Base64.decode(friend.getPicture(), Base64.DEFAULT);
-                    Bitmap decodedImageByte = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
-                    userImage.setImageBitmap(decodedImageByte);
+                    if (friend.getPicture() != null) {
+                        byte[] decodedPostImageString = Base64.decode(friend.getPicture(), Base64.DEFAULT);
+                        Bitmap bitm = BitmapFactory.decodeByteArray(decodedPostImageString, 0, decodedPostImageString.length);
+                        userImage.setImageBitmap(UtilityMethods.getRoundedBitmapToDisplay(bitm, bitm.getWidth(), bitm.getHeight()));
+                    }
                 }
             }
         } catch (Exception e) {

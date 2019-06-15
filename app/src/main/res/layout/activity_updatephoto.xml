@@ -25,8 +25,8 @@
 
         <ImageView
             android:id="@+id/profile_photo_updated"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_outline_account_box_24px" />

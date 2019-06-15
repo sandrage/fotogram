@@ -25,11 +25,13 @@ import java.util.List;
 public class PostAdapter extends ArrayAdapter<Post> {
     private int postsLayout;
     private List<Post> posts;
+    private Context context;
 
     public PostAdapter(@NonNull Context context, int resource, @NonNull List<Post> objects) {
         super(context, resource, objects);
         this.postsLayout = resource;
         this.posts = objects;
+        this.context = context;
     }
 
     public PostAdapter(Context context, int textViewResourceId) {
@@ -78,8 +80,8 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
                 if (profilePhotos != null && profilePhotos.containsKey(post.getUser())) {
                     byte[] decodedProfileImage = Base64.decode(profilePhotos.get(post.getUser()), Base64.DEFAULT);
-                    Bitmap decodedProfileImageByte = BitmapFactory.decodeByteArray(decodedProfileImage, 0, decodedProfileImage.length);
-                    creatorProfileImageView.setImageBitmap(decodedProfileImageByte);
+                    Bitmap profilePhoto = BitmapFactory.decodeByteArray(decodedProfileImage, 0, decodedProfileImage.length);
+                    creatorProfileImageView.setImageBitmap(UtilityMethods.getRoundedBitmapToDisplay(profilePhoto, profilePhoto.getWidth(), profilePhoto.getHeight()));
                 }
             }
         } catch (Exception e) {

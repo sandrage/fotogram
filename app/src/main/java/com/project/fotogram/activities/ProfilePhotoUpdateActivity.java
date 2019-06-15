@@ -74,7 +74,7 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("fotogramLogs", "save post cliccato!");
+                Log.d("fotogramLogs", "profile photo update cliccato!");
                 try {
                     ImageView loadedImage = (ImageView) findViewById(R.id.profile_photo_updated);
                     BitmapDrawable bitmapDrawable = (BitmapDrawable) loadedImage.getDrawable();
@@ -161,7 +161,8 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
             cursor.close();
 
             ImageView imageView = (ImageView) findViewById(R.id.profile_photo_updated);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            Bitmap loadedProfilePhoto = BitmapFactory.decodeFile(picturePath);
+            imageView.setImageBitmap(loadedProfilePhoto);
         }
     }
 }
