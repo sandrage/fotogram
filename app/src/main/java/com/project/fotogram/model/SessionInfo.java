@@ -16,10 +16,13 @@ import com.project.fotogram.utility.Constants;
 import com.project.fotogram.utility.UtilityMethods;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SessionInfo {
     private static SessionInfo instance;
     private HashMap<String, String> profilePhotos;
+    private static ExecutorService executorService;
 
     public synchronized static SessionInfo getInstance() {
         if (instance == null) {
@@ -29,6 +32,13 @@ public class SessionInfo {
     }
 
     private SessionInfo() {
+    }
+
+    public synchronized ExecutorService getExecutorService() {
+        if (this.executorService == null) {
+            this.executorService = Executors.newSingleThreadExecutor();
+        }
+        return this.executorService;
     }
 
     public synchronized void setSessionId(Activity activity, String sessionid) {
@@ -70,7 +80,7 @@ public class SessionInfo {
     }
 
     public synchronized void updateProfilePhotos(FragmentActivity activity) {
-        Log.d("fotogramLogs", "aggiorno le foto profilo!");
+        Log.d("fotogramLogs", "aggiorno le foto profilo! Thread: " + Thread.currentThread().getId());
         this.profilePhotos = new HashMap<>();
         RequestWithParams request = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "followed", new Response.Listener<String>() {
             @Override

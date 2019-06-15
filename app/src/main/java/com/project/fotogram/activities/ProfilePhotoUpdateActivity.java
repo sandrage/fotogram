@@ -71,6 +71,7 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
     }
 
     public View.OnClickListener getSavePostButtonListener() {
+        //TODO here Should I use another thread for this?
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +84,9 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
                     String imageToBeLoaded = Base64.encodeToString(imageBytes, Base64.DEFAULT);
                     RequestWithParams createPostRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "picture_update", response -> {
                         Log.d("fotogramLogs", "finito caricamento!");
+                        MyDialog dialog = new MyDialog();
+                        dialog.setMsg("Profile photo updated!");
+                        dialog.show(getSupportFragmentManager(), "MyDialog");
                         finish();
                     }, error -> UtilityMethods.manageCommunicationError(ProfilePhotoUpdateActivity.this, error));
 
@@ -92,6 +96,9 @@ public class ProfilePhotoUpdateActivity extends AppCompatActivity {
                     VolleySingleton.getInstance(ProfilePhotoUpdateActivity.this.getApplicationContext()).addToRequestQueue(createPostRequest);
                 } catch (Exception e) {
                     Log.d("fotogramLogs", e.getMessage());
+                    MyDialog dialog = new MyDialog();
+                    dialog.setMsg("Unexpected error occured!");
+                    dialog.show(getSupportFragmentManager(), "MyDialog");
                 }
 
             }

@@ -106,9 +106,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void followTheFriend(View v) {
         Log.d("fotogramLog", "follow the friend");
-        //TODO sincronizzare?
         RequestWithParams followRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "follow", mess -> {
-            SessionInfo.getInstance().updateProfilePhotos(ProfileActivity.this);
+            SessionInfo.getInstance().getExecutorService().submit(() -> SessionInfo.getInstance().updateProfilePhotos(ProfileActivity.this));
             MyDialog alert = new MyDialog();
             alert.setMsg("You are now following this user!");
             alert.show(getSupportFragmentManager(), "MyDialog");
@@ -123,8 +122,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void unfollowTheFriend(View v) {
         Log.d("fotogramLog", "unfollow the friend");
         RequestWithParams unfollowRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "unfollow", mess -> {
-            //TODO sincronizzare?
-            SessionInfo.getInstance().updateProfilePhotos(ProfileActivity.this);
+            SessionInfo.getInstance().getExecutorService().submit(() -> SessionInfo.getInstance().updateProfilePhotos(ProfileActivity.this));
             MyDialog alert = new MyDialog();
             alert.setMsg("You are not following this user anymore!");
             alert.show(getSupportFragmentManager(), "MyDialog");

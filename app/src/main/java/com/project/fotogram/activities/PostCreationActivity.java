@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.project.fotogram.R;
 import com.project.fotogram.communication.RequestWithParams;
 import com.project.fotogram.communication.VolleySingleton;
+import com.project.fotogram.dialogs.MyActionNeededDialog;
 import com.project.fotogram.dialogs.MyDialog;
 import com.project.fotogram.model.SessionInfo;
 import com.project.fotogram.utility.Constants;
@@ -58,41 +59,51 @@ public class PostCreationActivity extends AppCompatActivity {
     }
 
     public View.OnClickListener getPostCreationButtonListener() {
+        //TODO should I create 
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO sincronizzare
                 Log.d("fotogramLogs", "save post cliccato! " + Thread.currentThread().getId());
                 try {
                     ImageView loadedImage = (ImageView) findViewById(R.id.loadedImage);
 
                     BitmapDrawable bitmapDrawable = (BitmapDrawable) loadedImage.getDrawable();
-                    Bitmap bitmap = bitmapDrawable.getBitmap();
-                    byte[] imageBytes = UtilityMethods.resizePhoto(Constants.MAX_POST_BYTES, bitmap);
-                    String imageToBeLoaded = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                    String postComment = ((TextView) findViewById(R.id.newPostComment)).getText().toString();
-                    RequestWithParams createPostRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "create_post", new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("fotogramLogs", "finito caricamento!");
-                            finish();
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            UtilityMethods.manageCommunicationError(PostCreationActivity.this, error);
-                        }
-                    });
-                    createPostRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(PostCreationActivity.this));
-                    createPostRequest.addParam("img", imageToBeLoaded);
-                    createPostRequest.addParam("message", postComment);
-                    Log.d("fotogramLogs", "on save post sto per chiamare! " + Thread.currentThread().getId());
-                    VolleySingleton.getInstance(PostCreationActivity.this.getApplicationContext()).addToRequestQueue(createPostRequest);
+                    if (bitmapDrawable != null) {
+                        Bitmap bitmap = bitmapDrawable.getBitmap();
+                        byte[] imageBytes = UtilityMethods.resizePhoto(Constants.MAX_POST_BYTES, bitmap);
+                        String imageToBeLoaded = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                        String postComment = ((TextView) findViewById(R.id.newPostComment)).getText().toString();
+                        RequestWithParams createPostRequest = new RequestWithParams(Request.Method.POST, Constants.BASEURL + "create_post", new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("fotogramLogs", "finito caricamento!");
+                                MyActionNeededDialog dialog = new MyActionNeededDialog();
+                                dialog.configurePermissionsDialog("Post created!", PostCreationActivity.this);
+                                dialog.show(getSupportFragmentManager(), "MyDialog");
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                UtilityMethods.manageCommunicationError(PostCreationActivity.this, error);
+                            }
+                        });
+                        createPostRequest.addParam("session_id", SessionInfo.getInstance().getSessionId(PostCreationActivity.this));
+                        createPostRequest.addParam("img", imageToBeLoaded);
+                        createPostRequest.addParam("message", postComment);
+                        Log.d("fotogramLogs", "on save post sto per chiamare! " + Thread.currentThread().getId());
+                        VolleySingleton.getInstance(PostCreationActivity.this.getApplicationContext()).addToRequestQueue(createPostRequest);
+                    } else {
+                        MyDialog dialog = new MyDialog();
+                        dialog.setMsg("You need to upload a photo!");
+                        dialog.show(getSupportFragmentManager(), "MyDialog");
+                    }
+
                 } catch (Exception e) {
                     Log.d("fotogramLogs", e.getMessage());
-                    //TODO manage here the exception! what should I do?
+                    MyActionNeededDialog dialog = new MyActionNeededDialog();
+                    dialog.configurePermissionsDialog("Unexpected error occured!", PostCreationActivity.this);
+                    dialog.show(getSupportFragmentManager(), "MyDialog");
                 }
-
             }
         };
     }
